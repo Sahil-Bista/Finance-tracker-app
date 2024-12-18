@@ -1,0 +1,1 @@
+C:\Users\bista\source\repos\Corsework\Corsework.csproj;x64
