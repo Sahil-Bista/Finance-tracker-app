@@ -1,0 +1,40 @@
+@page "/"
+@using Corsework.Model
+<h3>Sign Up</h3>
+
+<EditForm Model="@user" OnValidSubmit="Submit">
+	<DataAnnotationsValidator/>
+	<div>
+		<label>Username</label>
+		<input type="text" @bind-value="user.Username" placeholder="Enter your username here" />
+		<ValidationMessage For="@(()=>user.Username)"></ValidationMessage>
+	</div>
+	<div>
+		<label>Email</label>
+		<input type="email"  bind-value="user.UserEmail" placeholder="Enter your username here" />
+		<ValidationMessage For="@(()=>user.UserEmail)"></ValidationMessage>
+	</div>
+	<div>
+		<label>Password</label>
+		<input type="password" @bind-value="user.Password" placeholder="Enter your password here" />
+		<ValidationMessage For="@(()=>user.Password)"></ValidationMessage>
+	</div>
+	<div>
+		<p>Already Signed up?
+		<NavLink href="/login">
+			<span>Login</span>
+		</NavLink>
+		</p>
+	</div>
+	<div>
+		<button type="submit">Sign Up</button>
+	</div>
+</EditForm>
+
+@code {
+	UserModel user = new UserModel();
+	private void Submit()
+	{
+		
+	}
+}

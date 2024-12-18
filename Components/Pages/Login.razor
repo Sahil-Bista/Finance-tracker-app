@@ -1,0 +1,36 @@
+@page "/login"
+@using Corsework.Model
+<h3>Login</h3>
+
+<EditForm Model="@userModel" OnInvalidSubmit="Submit">
+	<DataAnnotationsValidator/>
+	<div>
+		<label>Email</label>
+		<input type="email" @bind-value="userModel.UserEmail" placeholder="Enter your username here" />
+		<ValidationMessage For="@(()=>userModel.UserEmail)"></ValidationMessage>
+	</div>
+	<div>
+		<label>Password</label>
+		<input type="password" @bind-value="userModel.Password" placeholder="Enter your password here" />
+		<ValidationMessage For="@(()=>userModel.Password)"></ValidationMessage>
+	</div>
+	<div>
+	<p>Haven't signed up yet?
+	<NavLink href="/">
+		<span>Sign up</span>	
+	</NavLink>
+	</p>
+	</div>
+	<div>
+		<button type="submit">Sign In</button>
+	</div>
+</EditForm>
+
+@code{
+	UserModel userModel = new UserModel();
+
+	private void Submit()
+	{
+		
+	}
+}
