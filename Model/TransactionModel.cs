@@ -1,23 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SQLite;
+using System.ComponentModel.DataAnnotations;
 
 namespace Corsework.Model
 {
-    internal class TransactionModel
+    [Table("Transaction")]
+    public class TransactionModel
     {
+        [PrimaryKey]
+        [Column("transaction_id")]
         public Guid TransactionId { get; set; } = Guid.NewGuid();
-        public string TransactionType {  get; set; }//mandatory tags like credit,debit and debt
-        public int TransactionAmount { get; set; }
-        public DateTime TransactionTime { get; set; } = DateTime.Now;
-        public string TransactionSource { get; set; }
-        public string TransactionNotes { get; set; }
-        public string TransactionCustomTags { get; set; }
 
-        public Guid UserId { get; set; }
-        public UserModel User { get; set; }
+		[Column("transaction_name")]
+        [Required(ErrorMessage = "Transaction Name Required")]
+        public string TransactionName { get; set; }
+        
+        [Required(ErrorMessage = "Transaction Type Required")]
+        [Column("transaction_type")]
+		public string TransactionType {  get; set; } = "Credit";//mandatory tags like credit,debit and debt
+
+        [Required(ErrorMessage = "Enter a valid Tramsaction Amount")]
+        [Range(1,double.MaxValue, ErrorMessage = "Amount cannot be less than 0")]
+        [Column("transaction_amount")]
+		public double TransactionAmount { get; set; }
+
+        [Required(ErrorMessage = "Transaction Date Required")]
+        [Column("transaction_time")]
+        public DateTime TransactionTime { get; set; }
+
+		[Column("transaction_source")]
+        [Required(ErrorMessage = "Add the transaction Source")]
+        public string TransactionSource { get; set; }
+
+		[Column("transaction_notes")]
+		public string TransactionNotes { get; set; }
+
+		[Column("transaction_custom_tags")]
+		public string TransactionCustomTags { get; set; }
 
     }
 }

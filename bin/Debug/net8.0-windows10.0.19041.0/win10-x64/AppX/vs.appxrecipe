@@ -30,25 +30,25 @@
     <AppXManifest Include="C:\Users\bista\source\repos\Corsework\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2024-12-18T15:01:07.551</Modified>
+      <Modified>2024-12-28T14:11:14.349</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2024-12-17T07:04:57.695</Modified>
+      <Modified>2024-12-28T11:28:41.697</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Corsework.runtimeconfig.json">
       <PackagePath>Corsework.runtimeconfig.json</PackagePath>
-      <Modified>2024-12-16T13:30:38.456</Modified>
+      <Modified>2024-12-28T11:28:41.132</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Corsework.dll">
       <PackagePath>Corsework.dll</PackagePath>
-      <Modified>2024-12-18T15:01:06.867</Modified>
+      <Modified>2024-12-28T14:11:14.039</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>Corsework.exe</PackagePath>
-      <Modified>2024-12-18T15:01:06.880</Modified>
+      <Modified>2024-12-28T14:11:14.049</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\Resources\Raw\AboutAssets.txt">
       <PackagePath>AboutAssets.txt</PackagePath>
@@ -72,27 +72,27 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\wwwroot\index.html">
       <PackagePath>wwwroot\index.html</PackagePath>
-      <Modified>2024-12-15T03:49:14.098</Modified>
+      <Modified>2024-12-28T04:38:47.123</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-100.png">
       <PackagePath>splashSplashScreen.scale-100.png</PackagePath>
-      <Modified>2024-12-15T03:50:09.266</Modified>
+      <Modified>2024-12-28T11:28:33.855</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-125.png">
       <PackagePath>splashSplashScreen.scale-125.png</PackagePath>
-      <Modified>2024-12-15T03:50:09.308</Modified>
+      <Modified>2024-12-28T11:28:33.887</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-150.png">
       <PackagePath>splashSplashScreen.scale-150.png</PackagePath>
-      <Modified>2024-12-15T03:50:09.357</Modified>
+      <Modified>2024-12-28T11:28:33.934</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-200.png">
       <PackagePath>splashSplashScreen.scale-200.png</PackagePath>
-      <Modified>2024-12-15T03:50:09.442</Modified>
+      <Modified>2024-12-28T11:28:34.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-400.png">
       <PackagePath>splashSplashScreen.scale-400.png</PackagePath>
-      <Modified>2024-12-15T03:50:09.759</Modified>
+      <Modified>2024-12-28T11:28:34.281</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\f\OpenSans-Regular.ttf">
       <PackagePath>OpenSans-Regular.ttf</PackagePath>
@@ -100,211 +100,211 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appicon.ico">
       <PackagePath>appicon.ico</PackagePath>
-      <Modified>2024-12-15T03:50:12.887</Modified>
+      <Modified>2024-12-28T11:28:38.224</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-100.png">
       <PackagePath>appiconLargeTile.scale-100.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.861</Modified>
+      <Modified>2024-12-28T11:28:38.198</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-125.png">
       <PackagePath>appiconLargeTile.scale-125.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.861</Modified>
+      <Modified>2024-12-28T11:28:38.197</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-150.png">
       <PackagePath>appiconLargeTile.scale-150.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.860</Modified>
+      <Modified>2024-12-28T11:28:38.197</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-200.png">
       <PackagePath>appiconLargeTile.scale-200.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.860</Modified>
+      <Modified>2024-12-28T11:28:38.196</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-400.png">
       <PackagePath>appiconLargeTile.scale-400.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.859</Modified>
+      <Modified>2024-12-28T11:28:38.195</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-16.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-16.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.878</Modified>
+      <Modified>2024-12-28T11:28:38.214</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-24.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-24.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.878</Modified>
+      <Modified>2024-12-28T11:28:38.214</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-256.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-256.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.875</Modified>
+      <Modified>2024-12-28T11:28:38.212</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-32.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-32.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.878</Modified>
+      <Modified>2024-12-28T11:28:38.213</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-48.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-48.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.876</Modified>
+      <Modified>2024-12-28T11:28:38.212</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-16.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-16.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.882</Modified>
+      <Modified>2024-12-28T11:28:38.217</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-24.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-24.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.880</Modified>
+      <Modified>2024-12-28T11:28:38.217</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-256.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-256.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.879</Modified>
+      <Modified>2024-12-28T11:28:38.215</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-32.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-32.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.880</Modified>
+      <Modified>2024-12-28T11:28:38.216</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-48.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-48.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.879</Modified>
+      <Modified>2024-12-28T11:28:38.215</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-100.png">
       <PackagePath>appiconLogo.scale-100.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.887</Modified>
+      <Modified>2024-12-28T11:28:38.223</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-125.png">
       <PackagePath>appiconLogo.scale-125.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.887</Modified>
+      <Modified>2024-12-28T11:28:38.223</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-150.png">
       <PackagePath>appiconLogo.scale-150.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.886</Modified>
+      <Modified>2024-12-28T11:28:38.222</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-200.png">
       <PackagePath>appiconLogo.scale-200.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.886</Modified>
+      <Modified>2024-12-28T11:28:38.222</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-400.png">
       <PackagePath>appiconLogo.scale-400.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.885</Modified>
+      <Modified>2024-12-28T11:28:38.221</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-16.png">
       <PackagePath>appiconLogo.targetsize-16.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.885</Modified>
+      <Modified>2024-12-28T11:28:38.220</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-24.png">
       <PackagePath>appiconLogo.targetsize-24.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.884</Modified>
+      <Modified>2024-12-28T11:28:38.220</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-256.png">
       <PackagePath>appiconLogo.targetsize-256.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.882</Modified>
+      <Modified>2024-12-28T11:28:38.218</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-32.png">
       <PackagePath>appiconLogo.targetsize-32.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.883</Modified>
+      <Modified>2024-12-28T11:28:38.219</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-48.png">
       <PackagePath>appiconLogo.targetsize-48.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.883</Modified>
+      <Modified>2024-12-28T11:28:38.218</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-100.png">
       <PackagePath>appiconMediumTile.scale-100.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.868</Modified>
+      <Modified>2024-12-28T11:28:38.204</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-125.png">
       <PackagePath>appiconMediumTile.scale-125.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.868</Modified>
+      <Modified>2024-12-28T11:28:38.204</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-150.png">
       <PackagePath>appiconMediumTile.scale-150.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.867</Modified>
+      <Modified>2024-12-28T11:28:38.203</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-200.png">
       <PackagePath>appiconMediumTile.scale-200.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.866</Modified>
+      <Modified>2024-12-28T11:28:38.202</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-400.png">
       <PackagePath>appiconMediumTile.scale-400.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.866</Modified>
+      <Modified>2024-12-28T11:28:38.202</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-100.png">
       <PackagePath>appiconSmallTile.scale-100.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.872</Modified>
+      <Modified>2024-12-28T11:28:38.208</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-125.png">
       <PackagePath>appiconSmallTile.scale-125.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.871</Modified>
+      <Modified>2024-12-28T11:28:38.207</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-150.png">
       <PackagePath>appiconSmallTile.scale-150.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.870</Modified>
+      <Modified>2024-12-28T11:28:38.206</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-200.png">
       <PackagePath>appiconSmallTile.scale-200.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.870</Modified>
+      <Modified>2024-12-28T11:28:38.206</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-400.png">
       <PackagePath>appiconSmallTile.scale-400.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.869</Modified>
+      <Modified>2024-12-28T11:28:38.205</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-100.png">
       <PackagePath>appiconStoreLogo.scale-100.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.875</Modified>
+      <Modified>2024-12-28T11:28:38.211</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-125.png">
       <PackagePath>appiconStoreLogo.scale-125.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.874</Modified>
+      <Modified>2024-12-28T11:28:38.210</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-150.png">
       <PackagePath>appiconStoreLogo.scale-150.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.873</Modified>
+      <Modified>2024-12-28T11:28:38.210</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-200.png">
       <PackagePath>appiconStoreLogo.scale-200.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.873</Modified>
+      <Modified>2024-12-28T11:28:38.209</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-400.png">
       <PackagePath>appiconStoreLogo.scale-400.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.872</Modified>
+      <Modified>2024-12-28T11:28:38.209</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-100.png">
       <PackagePath>appiconWideTile.scale-100.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.865</Modified>
+      <Modified>2024-12-28T11:28:38.201</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-125.png">
       <PackagePath>appiconWideTile.scale-125.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.864</Modified>
+      <Modified>2024-12-28T11:28:38.201</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-150.png">
       <PackagePath>appiconWideTile.scale-150.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.864</Modified>
+      <Modified>2024-12-28T11:28:38.200</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-200.png">
       <PackagePath>appiconWideTile.scale-200.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.863</Modified>
+      <Modified>2024-12-28T11:28:38.199</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-400.png">
       <PackagePath>appiconWideTile.scale-400.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.862</Modified>
+      <Modified>2024-12-28T11:28:38.199</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-100.png">
       <PackagePath>dotnet_bot.scale-100.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.891</Modified>
+      <Modified>2024-12-28T11:28:38.195</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-125.png">
       <PackagePath>dotnet_bot.scale-125.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.889</Modified>
+      <Modified>2024-12-28T11:28:38.194</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-150.png">
       <PackagePath>dotnet_bot.scale-150.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.889</Modified>
+      <Modified>2024-12-28T11:28:38.194</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-200.png">
       <PackagePath>dotnet_bot.scale-200.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.888</Modified>
+      <Modified>2024-12-28T11:28:38.193</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-400.png">
       <PackagePath>dotnet_bot.scale-400.png</PackagePath>
-      <Modified>2024-12-15T03:50:12.888</Modified>
+      <Modified>2024-12-28T11:28:38.192</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Corsework.deps.json">
       <PackagePath>Corsework.deps.json</PackagePath>
-      <Modified>2024-12-17T07:04:56.972</Modified>
+      <Modified>2024-12-28T11:28:41.099</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\.nuget\packages\microsoft.windows.sdk.net.ref\10.0.19041.34\lib\net6.0\Microsoft.Windows.SDK.NET.dll">
       <PackagePath>Microsoft.Windows.SDK.NET.dll</PackagePath>
@@ -510,6 +510,22 @@
       <PackagePath>Microsoft.WindowsAppRuntime.Bootstrap.Net.dll</PackagePath>
       <Modified>2024-06-26T19:15:16.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\bista\.nuget\packages\sqlite-net-pcl\1.9.172\lib\netstandard2.0\SQLite-net.dll">
+      <PackagePath>SQLite-net.dll</PackagePath>
+      <Modified>2024-03-27T22:22:26.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\bista\.nuget\packages\sqlitepclraw.bundle_green\2.1.10\lib\netstandard2.0\SQLitePCLRaw.batteries_v2.dll">
+      <PackagePath>SQLitePCLRaw.batteries_v2.dll</PackagePath>
+      <Modified>2024-09-11T20:14:10.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\bista\.nuget\packages\sqlitepclraw.core\2.1.10\lib\netstandard2.0\SQLitePCLRaw.core.dll">
+      <PackagePath>SQLitePCLRaw.core.dll</PackagePath>
+      <Modified>2024-09-11T20:12:28.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\bista\.nuget\packages\sqlitepclraw.provider.e_sqlite3\2.1.10\lib\net6.0-windows7.0\SQLitePCLRaw.provider.e_sqlite3.dll">
+      <PackagePath>SQLitePCLRaw.provider.e_sqlite3.dll</PackagePath>
+      <Modified>2024-09-11T20:12:38.000</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\.nuget\packages\system.io.pipelines\8.0.0\lib\net8.0\System.IO.Pipelines.dll">
       <PackagePath>System.IO.Pipelines.dll</PackagePath>
       <Modified>2023-10-31T14:59:26.000</Modified>
@@ -658,6 +674,10 @@
       <PackagePath>Microsoft.WindowsAppRuntime.Bootstrap.dll</PackagePath>
       <Modified>2024-06-25T19:48:44.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\bista\.nuget\packages\sqlitepclraw.lib.e_sqlite3\2.1.10\runtimes\win-x64\native\e_sqlite3.dll">
+      <PackagePath>e_sqlite3.dll</PackagePath>
+      <Modified>2024-09-11T20:05:00.000</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\.nuget\packages\microsoft.maui.controls.compatibility\8.0.82\lib\net8.0-windows10.0.19041\Microsoft.Maui.Controls.Compatibility.pri">
       <PackagePath>Microsoft.Maui.Controls.Compatibility.pri</PackagePath>
       <Modified>2024-08-26T17:14:24.000</Modified>
@@ -672,11 +692,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\scopedcss\bundle\Corsework.styles.css">
       <PackagePath>wwwroot\Corsework.styles.css</PackagePath>
-      <Modified>2024-12-15T03:50:01.775</Modified>
+      <Modified>2024-12-28T11:28:05.846</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\scopedcss\projectbundle\Corsework.bundle.scp.css">
       <PackagePath>wwwroot\Corsework.bundle.scp.css</PackagePath>
-      <Modified>2024-12-15T03:50:01.779</Modified>
+      <Modified>2024-12-28T11:28:05.852</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\Components\Layout\MainLayout.razor.css">
       <PackagePath>Components\Layout\MainLayout.razor.css</PackagePath>

@@ -1,21 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SQLite;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Corsework.Model
 {
-    internal class UserModel
+    [Table("User")]
+    public class UserModel
     {
+        [PrimaryKey]
+        [Column("user_id")]
         public Guid UserId { get; set; } = Guid.NewGuid();
-        [Required]
+        [Column("user_email")]
+        [EmailAddress(ErrorMessage ="Invalid Email Address")]
+        [Required(ErrorMessage = "Email is Required")]
         public string UserEmail { get; set; }
-        [Required]
-        public string Username { get; set; }
-        [Required]
+        [Column("user_name")]
+        [Required(ErrorMessage = "Username is Required")]
+        public string UserName { get; set; }
+        [Column("user_password")]
+        [Required(ErrorMessage ="Password required")]
         public string Password { get; set; }
-        public string CurrencyPreference { get; set; }
+        [Column("currency_type")]
+        [Required(ErrorMessage = "Please select a currency type")]
+        public string CurrencyType { get; set; }
+        
+
     }
 }

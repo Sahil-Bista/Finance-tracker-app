@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Corsework.Services;
+using Microsoft.Extensions.Logging;
+using Microsoft.JSInterop;
 
 namespace Corsework
 {
@@ -7,21 +9,24 @@ namespace Corsework
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
-            builder
+			builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
 
+            builder.Services.AddSingleton<dbService>();
+            builder.Services.AddSingleton<TransactionService>();
             builder.Services.AddMauiBlazorWebView();
 
+           
 #if DEBUG
-    		builder.Services.AddBlazorWebViewDeveloperTools();
+			builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();
-#endif
 
-            return builder.Build();
+#endif
+			return builder.Build();
         }
     }
 }

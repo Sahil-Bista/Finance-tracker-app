@@ -1,23 +1,25 @@
 @page "/login"
 @using Corsework.Model
+@using Corsework.Services
+@inject NavigationManager Navigation
+@using System.ComponentModel.DataAnnotations
+@inject IJSRuntime JS
 <h3>Login</h3>
 
-<EditForm Model="@userModel" OnInvalidSubmit="Submit">
-	<DataAnnotationsValidator/>
+<EditForm Model="@user" OnSubmit="HandleLogin" >
+	<DataAnnotationsValidator />
 	<div>
 		<label>Email</label>
-		<input type="email" @bind-value="userModel.UserEmail" placeholder="Enter your username here" />
-		<ValidationMessage For="@(()=>userModel.UserEmail)"></ValidationMessage>
+		<input type="email" @bind-value="user.UserEmail" placeholder="Enter your username here" />
 	</div>
 	<div>
 		<label>Password</label>
-		<input type="password" @bind-value="userModel.Password" placeholder="Enter your password here" />
-		<ValidationMessage For="@(()=>userModel.Password)"></ValidationMessage>
+		<input type="password" @bind-value="user.Password" placeholder="Enter your password here" />
 	</div>
 	<div>
 	<p>Haven't signed up yet?
 	<NavLink href="/">
-		<span>Sign up</span>	
+		<span>Sign up</span>
 	</NavLink>
 	</p>
 	</div>
@@ -27,10 +29,47 @@
 </EditForm>
 
 @code{
-	UserModel userModel = new UserModel();
+	private UserModel user = new UserModel();
+	private dbUserService _userService = new dbUserService();
 
-	private void Submit()
+	private async Task HandleLogin()
 	{
-		
+		var validationResults = new List<ValidationResult>();
+
+		var emailContext = new ValidationContext(user) { MemberName = "UserEmail" };
+		var passwordContext = new ValidationContext(user) { MemberName = "Password" };
+
+		// Validate specific fields
+		var isEmailValid = Validator.TryValidateProperty(user.UserEmail, emailContext, validationResults);
+		var isPasswordValid = Validator.TryValidateProperty(user.Password, passwordContext, validationResults);
+
+		var filteredResults = validationResults
+					.Where(vr => vr.MemberNames.Contains("UserEmail") || vr.MemberNames.Contains("Password"))
+					.ToList();
+
+		// If there are validation errors, show only relevant messages
+		if (filteredResults.Any())
+		{
+			foreach (var validationResult in filteredResults)
+			{
+				Console.WriteLine(validationResult.ErrorMessage);
+				await JS.InvokeVoidAsync("showAlert", validationResult.ErrorMessage);  // Show specific error
+			}
+			return; // Exit method if validation fails
+		}
+		var User = await _userService.GetUserByEmailAndPassword(user.UserEmail, user.Password);
+
+		if (User != null)
+		{
+			Console.WriteLine("User logged in successfully!");
+			Navigation.NavigateTo("/transactions");
+		}
+		else
+		{
+			Console.WriteLine("Invalid login credentials.");
+			await JS.InvokeVoidAsync("showAlert", "Invalid Login credentials");
+		}
 	}
+
+
 }

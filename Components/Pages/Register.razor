@@ -1,40 +1,80 @@
 @page "/"
+@using Corsework.Services
 @using Corsework.Model
+@using System.ComponentModel.DataAnnotations
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+
 <h3>Sign Up</h3>
 
-<EditForm Model="@user" OnValidSubmit="Submit">
-	<DataAnnotationsValidator/>
-	<div>
-		<label>Username</label>
-		<input type="text" @bind-value="user.Username" placeholder="Enter your username here" />
-		<ValidationMessage For="@(()=>user.Username)"></ValidationMessage>
-	</div>
-	<div>
-		<label>Email</label>
-		<input type="email"  bind-value="user.UserEmail" placeholder="Enter your username here" />
-		<ValidationMessage For="@(()=>user.UserEmail)"></ValidationMessage>
-	</div>
-	<div>
-		<label>Password</label>
-		<input type="password" @bind-value="user.Password" placeholder="Enter your password here" />
-		<ValidationMessage For="@(()=>user.Password)"></ValidationMessage>
-	</div>
-	<div>
-		<p>Already Signed up?
-		<NavLink href="/login">
-			<span>Login</span>
-		</NavLink>
-		</p>
-	</div>
-	<div>
-		<button type="submit">Sign Up</button>
-	</div>
+<EditForm Model="@user" OnSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <div>
+        <label>Email</label>
+        <input type="email" @bind-value="user.UserEmail" placeholder="Enter your Email here" />
+    </div>
+    <div>
+        <label>UserName</label>
+        <input type="text" @bind-value="user.UserName" placeholder="Enter your username here" />
+    </div>
+    <div>
+        <label>Password</label>
+        <input type="password" @bind-value="user.Password" placeholder="Enter your password here" />
+    </div>
+    <div>
+        <label>Currency Type</label>
+        <select id="transactionType" @bind="user.CurrencyType">
+            <option value="$USD">US Dollar</option>
+            <option value="NPR">Nepali Rupees</option>
+            <option value="INR">Indian Rupee</option>
+        </select>
+    </div>
+    <div>
+        <p>
+            Already Signed up?
+            <NavLink href="/login">
+                <span>Login</span>
+            </NavLink>
+        </p>
+    </div>
+    <div>
+        <button type="submit">Sign Up</button>
+    </div>
 </EditForm>
 
 @code {
-	UserModel user = new UserModel();
-	private void Submit()
-	{
-		
-	}
+    private UserModel user = new UserModel();
+    private dbUserService _userService = new dbUserService();
+
+    private async Task HandleSubmit()
+    {
+        var validationResults = new List<ValidationResult>();
+        var validationContext = new ValidationContext(user);
+
+        bool isValid = Validator.TryValidateObject(user, validationContext, validationResults, true);
+
+        if (!isValid)
+        {
+            // Show validation errors - customized for different error types
+            foreach (var validationResult in validationResults)
+            {
+                Console.WriteLine(validationResult.ErrorMessage);
+                await JS.InvokeVoidAsync("showAlert", validationResult.ErrorMessage);  // Show specific error
+            }
+            return; // Exit method if validation fails
+        }
+
+        try
+        {
+            await _userService.CreateUser(user);
+            Console.WriteLine("User Created successfully!");
+            user = new UserModel(); // Clear the form
+            Navigation.NavigateTo("/login");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "vQUn6mh8S44=",
+  "dgSpecHash": "IEftB6dfPUQ=",
   "success": true,
   "projectFilePath": "C:\\Users\\bista\\source\\repos\\Corsework\\Corsework.csproj",
   "expectedPackageFiles": [
@@ -44,7 +44,13 @@
     "C:\\Users\\bista\\.nuget\\packages\\microsoft.maui.resizetizer\\8.0.82\\microsoft.maui.resizetizer.8.0.82.nupkg.sha512",
     "C:\\Users\\bista\\.nuget\\packages\\microsoft.windows.sdk.buildtools\\10.0.22621.756\\microsoft.windows.sdk.buildtools.10.0.22621.756.nupkg.sha512",
     "C:\\Users\\bista\\.nuget\\packages\\microsoft.windowsappsdk\\1.5.240627000\\microsoft.windowsappsdk.1.5.240627000.nupkg.sha512",
+    "C:\\Users\\bista\\.nuget\\packages\\sqlite-net-pcl\\1.9.172\\sqlite-net-pcl.1.9.172.nupkg.sha512",
+    "C:\\Users\\bista\\.nuget\\packages\\sqlitepclraw.bundle_green\\2.1.10\\sqlitepclraw.bundle_green.2.1.10.nupkg.sha512",
+    "C:\\Users\\bista\\.nuget\\packages\\sqlitepclraw.core\\2.1.10\\sqlitepclraw.core.2.1.10.nupkg.sha512",
+    "C:\\Users\\bista\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.1.10\\sqlitepclraw.lib.e_sqlite3.2.1.10.nupkg.sha512",
+    "C:\\Users\\bista\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.1.10\\sqlitepclraw.provider.e_sqlite3.2.1.10.nupkg.sha512",
     "C:\\Users\\bista\\.nuget\\packages\\system.io.pipelines\\8.0.0\\system.io.pipelines.8.0.0.nupkg.sha512",
+    "C:\\Users\\bista\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
     "C:\\Users\\bista\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
     "C:\\Users\\bista\\.nuget\\packages\\system.text.json\\8.0.0\\system.text.json.8.0.0.nupkg.sha512",
     "C:\\Users\\bista\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.34\\microsoft.windows.sdk.net.ref.10.0.19041.34.nupkg.sha512"

@@ -1,0 +1,137 @@
+﻿@page "/transactions"
+@using Corsework.Services
+@using Corsework.Model
+@inject NavigationManager Navigation
+@inject dbService DbService
+@inject TransactionService TransactionService
+
+<div>
+    <h1>Transactions</h1>
+    <h2>Balance : $@Balance</h2>
+
+    <div>
+        <ul>
+            @foreach (var transaction in transactions)
+            {
+                <li>
+                    @transaction.TransactionName
+                    @transaction.TransactionAmount
+                    @transaction.TransactionTime
+                    <button @onclick="() => HandleDelete(transaction.TransactionId)"> Delete</button>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+<hr />
+<div>
+
+    <h1>Cash Outflows</h1>
+    <p>Outflowsum: @OutflowAmount</p>
+    <div>
+        <ul>
+            @foreach (var transaction in cashOutflows)
+            {
+                <li>
+                    @transaction.TransactionName
+                    @transaction.TransactionAmount
+                    <button @onclick="() => HandleDelete(transaction.TransactionId)"> Delete</button>
+                </li>
+            }
+        </ul>
+    </div>
+
+</div>
+<hr />
+<div>
+
+    <h1>Cash Inflows</h1>
+    <p>Inflow sum : @InflowAmount</p>
+    <div>
+        <ul>
+            @foreach (var transaction in cashInflows)
+            {
+                <li>
+                    @transaction.TransactionName
+                    @transaction.TransactionAmount
+                    <button type="submit" onsubmit="HandleDelete(@transaction.TransactionId)"> Delete</button>
+                </li>
+            }
+        </ul>
+    </div>
+
+</div>
+<hr />
+<div>
+
+    <h1>Debts</h1>
+    <p>Total Debt : @TotalDebt</p>
+    <div>
+        <ul>
+            @foreach (var transaction in debts)
+            {
+                <li>
+                    @transaction.TransactionName
+                    @transaction.TransactionAmount
+                    <button type="submit" onsubmit="HandleDelete(@transaction.TransactionId)"> Delete</button>
+                </li>
+            }
+        </ul>
+    </div>
+
+</div>
+
+<div>
+    <button @onclick="RedirectToAddTransaction">
+        Add Transaction
+    </button>
+</div>
+
+@code {
+    private List<TransactionModel> transactions = new List<TransactionModel>();
+    private List<TransactionModel> cashOutflows = new List<TransactionModel>();
+    private List<TransactionModel> cashInflows = new List<TransactionModel>();
+    private List<TransactionModel> debts = new List<TransactionModel>();
+    private double OutflowAmount;
+    private Double InflowAmount;
+    private Double Balance;
+    private Double TotalDebt;
+
+    protected override async Task OnInitializedAsync()
+    {
+        transactions = await DbService.GetTransactions();
+        cashOutflows = transactions.Where(t => t.TransactionType == "Debit").OrderByDescending(t => t.TransactionTime).ToList();
+        OutflowAmount = cashOutflows.Sum(t => t.TransactionAmount);
+        cashInflows = transactions.Where(t => t.TransactionType == "Credit").OrderByDescending(t => t.TransactionTime).ToList();
+        InflowAmount = cashInflows.Sum(t => t.TransactionAmount);
+        Balance = InflowAmount - OutflowAmount;
+        TransactionService.Balance = Balance;
+        debts = transactions.Where(t => t.TransactionType == "Debt").OrderByDescending(t => t.TransactionTime).ToList();
+        TotalDebt = debts.Sum(t => t.TransactionAmount);
+    }
+
+    private dbService _dbService = new dbService();
+
+    private async Task HandleDelete(Guid transaction)
+    {
+        try
+        {
+            await _dbService.DeleteById(transaction);
+            Console.WriteLine("Transaction added successfully!");
+            transactions = await DbService.GetTransactions();
+            cashOutflows = transactions.Where(t => t.TransactionType == "Debit").ToList();
+            cashInflows = transactions.Where(t => t.TransactionType == "Credit").ToList();
+            debts = transactions.Where(t => t.TransactionType == "Debt").ToList();
+            Balance = InflowAmount - OutflowAmount;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+
+    private void RedirectToAddTransaction()
+    {
+        Navigation.NavigateTo("/addTransactions");
+    }
+}

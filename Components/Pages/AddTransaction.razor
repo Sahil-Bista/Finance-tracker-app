@@ -1,0 +1,108 @@
+﻿@page "/addTransactions"
+@using Corsework.Services;
+@using Corsework.Model;
+@inject NavigationManager Navigation;
+@using System.ComponentModel.DataAnnotations;
+@inject IJSRuntime JS;
+@inject TransactionService TransactionService;
+
+<h3>AddTransaction</h3>
+
+
+<EditForm Model="@transactionModel" OnSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="col-auto w-75">
+        <div>
+            <label for="transactionName">Transaction Name</label>
+            <InputText id="transactionName" @bind-Value="transactionModel.TransactionName" placeholder="Add Transaction name here"></InputText>
+        </div>
+        <div>
+            <label for="transactionType">Transaction Type</label>
+            <select id="transactionType" @bind="transactionModel.TransactionType">
+                <option value="Credit">Credit</option>
+                <option value="Debit">Debit</option>
+            </select>
+        </div>
+        <div>
+            <label for="transactionAmount">Transaction Amount</label>
+            <InputNumber id="transactionAmount" @bind-Value="transactionModel.TransactionAmount"
+                         class="form-control w-100" placeholder="Add Transaction Amount here"></InputNumber>
+        </div>
+        <div>
+            <label for="transactionSource">Transaction Source</label>
+            <InputText id="transactionSource" @bind-Value="transactionModel.TransactionSource"
+                       class="form-control w-100" placeholder="Add Transaction Source here"></InputText>
+        </div>
+        <div>
+            <label for="transactionTime">Transaction Time</label>
+            <InputDate id="transactionTime" @bind-Value="transactionModel.TransactionTime"
+                       class="form-control w-100"></InputDate>
+        </div>
+        <div>
+            <label for="transactionNotes">Transaction Notes(Optional)</label>
+            <InputText id="transactionNotes" @bind-Value="transactionModel.TransactionNotes" placeholder="Add Transaction note here"></InputText>
+        </div>
+        <div>
+            <label for="transactionCustomTags">Transaction Tags(Optional)</label>
+            <InputText id="transactionCustomTags" @bind-Value="transactionModel.TransactionCustomTags" placeholder="Add Transaction name here"></InputText>
+        </div>
+    </div>
+
+    <div class="col-auto w-25">
+        <button type="submit" class="btn btn-primary mb-3 w-100">Add</button>
+    </div>
+    <div>
+        <p>
+            Transactions
+            <NavLink href="/transactions">
+                <span>Transactions</span>
+            </NavLink>
+        </p>
+    </div>
+</EditForm>
+
+
+@code {
+    private TransactionModel transactionModel = new TransactionModel();
+    private dbService _dbService = new dbService();
+
+
+    private async Task HandleSubmit()
+    {
+        var validationResults = new List<ValidationResult>();
+        var validationContext = new ValidationContext(transactionModel);
+
+        bool isValid = Validator.TryValidateObject(transactionModel, validationContext, validationResults, true);
+
+        if (!isValid)
+        {
+            // Show validation errors - customized for different error types
+            foreach (var validationResult in validationResults)
+            {
+                Console.WriteLine(validationResult.ErrorMessage);
+                await JS.InvokeVoidAsync("showAlert", validationResult.ErrorMessage);  // Show specific error
+            }
+            return; // Exit method if validation fails
+        }
+        try
+        {
+            var balance = TransactionService.Balance;
+            if(transactionModel.TransactionAmount > balance && transactionModel.TransactionType=="Debit")
+            {
+                var insufficientAmount = -(balance - transactionModel.TransactionAmount);
+                Console.WriteLine("Balance insufficient for transaction");
+                await JS.InvokeVoidAsync("showAlert", $"balance Insufficient by ${insufficientAmount}");
+                return;
+            }
+            await _dbService.Create(transactionModel);
+            Console.WriteLine("Transaction added successfully!");
+            transactionModel = new TransactionModel(); // Clear the form
+            Navigation.NavigateTo("/transactions");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+}
