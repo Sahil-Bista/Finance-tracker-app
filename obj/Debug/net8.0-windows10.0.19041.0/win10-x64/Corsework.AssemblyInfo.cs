@@ -17,7 +17,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Corsework")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+2359fc4de3d4264c72731502825703e6b9b1fd61")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+9a315ea67744b82d0c89315ce2dae170f90f188c")]
 [assembly: System.Reflection.AssemblyProductAttribute("Corsework")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Corsework")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

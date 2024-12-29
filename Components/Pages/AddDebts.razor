@@ -1,0 +1,90 @@
+﻿@page "/addDebts"
+@using Corsework.Services
+@using Corsework.Model
+@inject NavigationManager Navigation
+@using System.ComponentModel.DataAnnotations
+@inject IJSRuntime JS
+@inject TransactionService TransactionService
+
+<h3>Add Debts</h3>
+
+<EditForm Model="@debt" OnSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="col-auto w-75">
+        <div>
+            <label for="debtSource">Debt Source</label>
+            <InputText id="debtSource" @bind-Value="debt.DebtSource" placeholder="Add debt source here" />
+        </div>
+
+        <div>
+            <label for="debtAmount">Debt Amount</label>
+            <InputNumber id="debtAmount" @bind-Value="debt.DebtAmount" placeholder="Add debt amount here" />
+        </div>
+
+        <div>
+            <label for="dueDate">Due Date</label>
+            <InputDate id="dueDate" @bind-Value="debt.DueDate" class="form-control w-100" />
+        </div>
+
+        <div>
+            <label for="isCleared">Is Cleared?</label>
+            <InputCheckbox id="isCleared" @bind-Value="debt.IsCleared" />
+        </div>
+
+        <div>
+            <label for="clearedDate">Cleared Date</label>
+            <InputDate id="clearedDate" @bind-Value="debt.ClearedDate" class="form-control w-100" />
+        </div>
+    </div>
+
+    <div class="col-auto w-25">
+        <button type="submit" class="btn btn-primary mb-3 w-100">Add Debt</button>
+    </div>
+
+    <div>
+        <NavLink href="/debts">
+            <span>View Debts</span>
+        </NavLink>
+    </div>
+</EditForm>
+
+@code {
+    private DebtModel debt = new DebtModel();
+    private dbDebtService _dbDebtService = new dbDebtService();
+
+    private async Task HandleSubmit()
+    {
+        var validationResults = new List<ValidationResult>();
+        ValidationContext validationContext1 = new ValidationContext(debt);
+        var validationContext = validationContext1;
+
+        bool isValid = Validator.TryValidateObject(debt, validationContext, validationResults, true);
+
+            if (!isValid)
+            {
+                foreach (var validationResult in validationResults)
+                {
+                    Console.WriteLine(validationResult.ErrorMessage);
+                    await JS.InvokeVoidAsync("alert", validationResult.ErrorMessage);
+                }
+                return;
+            }
+
+            try
+            {
+                TransactionService.Balance += debt.DebtAmount;
+                await _dbDebtService.Create(debt);
+                Console.WriteLine("Debt added successfully!");
+                debt = new DebtModel(); // Clear the form
+                StateHasChanged();
+                Navigation.NavigateTo("/debts");
+            }
+            catch (Exception ex)
+            {
+                TransactionService.Balance -= debt.DebtAmount;
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+}

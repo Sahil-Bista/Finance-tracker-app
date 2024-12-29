@@ -9,5 +9,6 @@ namespace Corsework.Services
     internal class TransactionService
     {
         public double Balance { get; set; }
+        public double Debt { get; set; }
     }
 }

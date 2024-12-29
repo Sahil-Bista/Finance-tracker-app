@@ -17,6 +17,8 @@ namespace Corsework
                 });
 
             builder.Services.AddSingleton<dbService>();
+            builder.Services.AddSingleton<dbUserService>();
+            builder.Services.AddSingleton<dbDebtService>();
             builder.Services.AddSingleton<TransactionService>();
             builder.Services.AddMauiBlazorWebView();
 

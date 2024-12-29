@@ -3,11 +3,12 @@
 @using Corsework.Model
 @inject NavigationManager Navigation
 @inject dbService DbService
+@inject dbDebtService debtdb
 @inject TransactionService TransactionService
 
 <div>
     <h1>Transactions</h1>
-    <h2>Balance : $@Balance</h2>
+    <h2>Balance : @TransactionService.Balance</h2>
 
     <div>
         <ul>
@@ -54,26 +55,7 @@
                 <li>
                     @transaction.TransactionName
                     @transaction.TransactionAmount
-                    <button type="submit" onsubmit="HandleDelete(@transaction.TransactionId)"> Delete</button>
-                </li>
-            }
-        </ul>
-    </div>
-
-</div>
-<hr />
-<div>
-
-    <h1>Debts</h1>
-    <p>Total Debt : @TotalDebt</p>
-    <div>
-        <ul>
-            @foreach (var transaction in debts)
-            {
-                <li>
-                    @transaction.TransactionName
-                    @transaction.TransactionAmount
-                    <button type="submit" onsubmit="HandleDelete(@transaction.TransactionId)"> Delete</button>
+                    <button @onclick="() => HandleDelete(transaction.TransactionId)"> Delete</button>
                 </li>
             }
         </ul>
@@ -87,15 +69,21 @@
     </button>
 </div>
 
+<div>
+    <button @onclick="RedirectToAddDebt">
+        Add Debt
+    </button>
+</div>
+
+
 @code {
     private List<TransactionModel> transactions = new List<TransactionModel>();
     private List<TransactionModel> cashOutflows = new List<TransactionModel>();
     private List<TransactionModel> cashInflows = new List<TransactionModel>();
-    private List<TransactionModel> debts = new List<TransactionModel>();
     private double OutflowAmount;
     private Double InflowAmount;
     private Double Balance;
-    private Double TotalDebt;
+    private Double debt;
 
     protected override async Task OnInitializedAsync()
     {
@@ -106,8 +94,7 @@
         InflowAmount = cashInflows.Sum(t => t.TransactionAmount);
         Balance = InflowAmount - OutflowAmount;
         TransactionService.Balance = Balance;
-        debts = transactions.Where(t => t.TransactionType == "Debt").OrderByDescending(t => t.TransactionTime).ToList();
-        TotalDebt = debts.Sum(t => t.TransactionAmount);
+        debt = TransactionService.Debt;
     }
 
     private dbService _dbService = new dbService();
@@ -117,12 +104,13 @@
         try
         {
             await _dbService.DeleteById(transaction);
-            Console.WriteLine("Transaction added successfully!");
+            Console.WriteLine("Transaction deleted successfully!");
             transactions = await DbService.GetTransactions();
             cashOutflows = transactions.Where(t => t.TransactionType == "Debit").ToList();
             cashInflows = transactions.Where(t => t.TransactionType == "Credit").ToList();
-            debts = transactions.Where(t => t.TransactionType == "Debt").ToList();
-            Balance = InflowAmount - OutflowAmount;
+            Balance = InflowAmount - OutflowAmount ;
+            TransactionService.Balance = Balance;
+            StateHasChanged();
         }
         catch (Exception ex)
         {
@@ -133,5 +121,10 @@
     private void RedirectToAddTransaction()
     {
         Navigation.NavigateTo("/addTransactions");
+    }
+
+    private void RedirectToAddDebt()
+    {
+        Navigation.NavigateTo("/addDebts");
     }
 }
