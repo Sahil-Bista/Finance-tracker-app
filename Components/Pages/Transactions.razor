@@ -9,8 +9,10 @@
 <div>
     <h1>Transactions</h1>
     <h2>Balance : @TransactionService.Balance</h2>
+    <button @onclick="()=>SortByDate()">Sort by date</button>
 
     <div>
+        <h1>Total transactions: @transactions.Count</h1>
         <ul>
             @foreach (var transaction in transactions)
             {
@@ -30,6 +32,7 @@
     <h1>Cash Outflows</h1>
     <p>Outflowsum: @OutflowAmount</p>
     <div>
+        <h1>Total Cash Outflows: @cashOutflows.Count</h1>
         <ul>
             @foreach (var transaction in cashOutflows)
             {
@@ -49,6 +52,7 @@
     <h1>Cash Inflows</h1>
     <p>Inflow sum : @InflowAmount</p>
     <div>
+        <h1>Total Cash Inflows : @cashInflows.Count</h1>
         <ul>
             @foreach (var transaction in cashInflows)
             {
@@ -126,5 +130,10 @@
     private void RedirectToAddDebt()
     {
         Navigation.NavigateTo("/addDebts");
+    }
+
+    private void SortByDate()
+    {
+        transactions = transactions.OrderByDescending(t => t.TransactionTime).ToList();
     }
 }

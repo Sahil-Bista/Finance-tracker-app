@@ -11,13 +11,13 @@
     <p>Total Debt : @TotalDebt</p>
     <p>Total Balance With Debt : @TotalBalanceWithDebt</p>
     <p>Remaining debt : @TotalUnpaidDebts</p>
-    <p>Ckeared Debt : @PaidDebts</p>
+    <p>Cleared Debt : @PaidDebts</p>
     <p></p>
     <div>
         <ul>
             @foreach (var debt in debts)
             {
-                <li>
+                <li style="@(debt.IsCleared==false ? "background-color: goldenrod;" : "")">
                     @debt.DebtSource
                     @debt.DebtAmount
                     @debt.IsCleared
