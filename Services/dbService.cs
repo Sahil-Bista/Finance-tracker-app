@@ -26,7 +26,12 @@ namespace Corsework.Services
 			return await _connection.Table<TransactionModel>().Where(x=>x.TransactionId == id).FirstOrDefaultAsync();
 		}
 
-		public async Task Create(TransactionModel transaction)
+        public async Task<List<TransactionModel>> GetByName(String name)
+        {
+            return await _connection.Table<TransactionModel>().Where(x => x.TransactionName == name).ToListAsync();
+        }
+
+        public async Task Create(TransactionModel transaction)
 		{
             try
             {

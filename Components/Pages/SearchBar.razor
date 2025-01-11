@@ -1,0 +1,25 @@
+﻿<input 
+	@bind="searchItem"
+	placeholder="Search by type, tags, name"
+	/>
+
+
+
+<button @onclick="OnSearchClicked">
+	Search
+</button>
+
+
+@code {
+
+	[Parameter]
+	public EventCallback<string> OnSearch { get; set;}
+
+	public string searchItem;
+
+	private async Task OnSearchClicked()
+	{
+		await OnSearch.InvokeAsync(searchItem);
+	}
+
+}

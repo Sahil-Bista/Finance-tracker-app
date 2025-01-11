@@ -16,7 +16,7 @@ namespace Corsework.Model
         
         [Required(ErrorMessage = "Transaction Type Required")]
         [Column("transaction_type")]
-		public string TransactionType {  get; set; } = "Credit";//mandatory tags like credit,debit and debt
+		public string TransactionType {  get; set; } = "Credit";
 
         [Required(ErrorMessage = "Enter a valid Tramsaction Amount")]
         [Range(1,double.MaxValue, ErrorMessage = "Amount cannot be less than 0")]

@@ -21,8 +21,6 @@ namespace Corsework.Model
         public string Password { get; set; }
         [Column("currency_type")]
         [Required(ErrorMessage = "Please select a currency type")]
-        public string CurrencyType { get; set; }
-        
-
+        public string CurrencyType { get; set; } = "$USD";
     }
 }

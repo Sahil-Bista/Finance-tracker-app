@@ -11,15 +11,28 @@
     <h2>Balance : @TransactionService.Balance</h2>
     <button @onclick="()=>SortByDate()">Sort by date</button>
 
+    <SearchBar OnSearch="UpdateFilteredTransactions"></SearchBar>
+    <br />
+    <form @onsubmit="SearchByDateRange">
+         <div>
+             <input type="date" id="startDate" placeholder="Enter the start date" @bind-value="startDate"/>
+         </div>
+         <div>
+             <input type="date" id="endDate" placeholder="Enter the end date" @bind-value="endDate" />
+         </div>
+    </form>
+   
+
     <div>
-        <h1>Total transactions: @transactions.Count</h1>
+        <h1>Total transactions: @filteredTransactions.Count</h1>
         <ul>
-            @foreach (var transaction in transactions)
+            @foreach (var transaction in filteredTransactions)
             {
                 <li>
                     @transaction.TransactionName
                     @transaction.TransactionAmount
                     @transaction.TransactionTime
+                    @transaction.TransactionType
                     <button @onclick="() => HandleDelete(transaction.TransactionId)"> Delete</button>
                 </li>
             }
@@ -82,16 +95,20 @@
 
 @code {
     private List<TransactionModel> transactions = new List<TransactionModel>();
+    private List<TransactionModel> filteredTransactions = new List<TransactionModel>();
     private List<TransactionModel> cashOutflows = new List<TransactionModel>();
     private List<TransactionModel> cashInflows = new List<TransactionModel>();
     private double OutflowAmount;
     private Double InflowAmount;
     private Double Balance;
     private Double debt;
+    private DateTime startDate;
+    private DateTime endDate;
 
     protected override async Task OnInitializedAsync()
     {
         transactions = await DbService.GetTransactions();
+        filteredTransactions = transactions.ToList();
         cashOutflows = transactions.Where(t => t.TransactionType == "Debit").OrderByDescending(t => t.TransactionTime).ToList();
         OutflowAmount = cashOutflows.Sum(t => t.TransactionAmount);
         cashInflows = transactions.Where(t => t.TransactionType == "Credit").OrderByDescending(t => t.TransactionTime).ToList();
@@ -134,6 +151,40 @@
 
     private void SortByDate()
     {
-        transactions = transactions.OrderByDescending(t => t.TransactionTime).ToList();
+        transactions = filteredTransactions.OrderByDescending(t => t.TransactionTime).ToList();
+    }
+
+    private void  UpdateFilteredTransactions(string searchTerm)
+    {
+        if (string.IsNullOrEmpty(searchTerm))
+        {
+            filteredTransactions = transactions.ToList();
+        }
+        else
+        {
+            filteredTransactions = transactions
+            .Where(t => t.TransactionName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) || 
+            t.TransactionType.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+            t.TransactionCustomTags !=null && t.TransactionCustomTags.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+        }
+
+        if (startDate != default(DateTime) && endDate != default(DateTime)) 
+        {
+            filteredTransactions = filteredTransactions.Where(t => t.TransactionTime >= startDate && t.TransactionTime <= endDate).ToList();
+        }
+
+        StateHasChanged();
+
+
+    }
+
+    private async Task SearchByDateRange()
+    {
+        if (startDate != default(DateTime) && endDate != default(DateTime))
+        {
+            filteredTransactions = transactions.Where(t => t.TransactionTime >= startDate && t.TransactionTime <= endDate).ToList();
+        }
+        StateHasChanged();
     }
 }
