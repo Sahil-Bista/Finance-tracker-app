@@ -36,5 +36,20 @@ namespace Corsework.Services
                                          .Where(x => x.UserEmail == email && x.Password == password)
                                          .FirstOrDefaultAsync();
         }
+
+		public async Task<int> GetUserCount()
+		{
+			try
+			{
+				// Execute a COUNT query on the UserModel table
+				var userCount = await _connection.Table<UserModel>().CountAsync();
+				return userCount;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"Error counting users: {ex.Message}");
+				return 0;  // Return 0 if an error occurs
+			}
+		}
     }
 }

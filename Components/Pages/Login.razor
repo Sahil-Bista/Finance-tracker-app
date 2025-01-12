@@ -1,32 +1,58 @@
 @page "/login"
 @using Corsework.Model
 @using Corsework.Services
+@using Corsework.Components.Layout
 @inject NavigationManager Navigation
 @using System.ComponentModel.DataAnnotations
 @inject IJSRuntime JS
-<h3>Login</h3>
+@layout CustomLayout
 
-<EditForm Model="@user" OnSubmit="HandleLogin" >
-	<DataAnnotationsValidator />
-	<div>
-		<label>Email</label>
-		<input type="email" @bind-value="user.UserEmail" placeholder="Enter your username here" />
+<section class="text-center">
+	<!-- Background image -->
+	<div class="p-5 bg-image position-relative" style="
+        background-image: url('https://mdbootstrap.com/img/new/textures/full/171.jpg');
+         height: 300px;
+		background-size: cover;
+        background-position: center;
+			"></div>
+	<!-- Background image -->
+
+	<div class="card mx-4 mx-md-5 shadow-5-strong bg-body-tertiary" style="
+        margin-top: -120px;
+        backdrop-filter: blur(30px);
+			">
+		<div class="card-body py-5 px-md-5">
+
+			<div class="row d-flex justify-content-center">
+				<div class="col-lg-8">
+					<h2 class="fw-bold mb-5">Sign up now</h2>
+					<EditForm Model="@user" OnSubmit="HandleLogin">
+						<DataAnnotationsValidator />
+						<!-- 2 column grid layout with text inputs for the first and last names -->
+
+						<!-- Email input -->
+						<div data-mdb-input-init class="form-outline mb-4">
+							<label for="email" class="form-label fw-bold">Email</label>
+							<input type="email" id="email" @bind-value="user.UserEmail" placeholder="sahil@gmail.com" class="form-control" />
+						</div>
+
+						<!-- Password input -->
+						<div data-mdb-input-init class="form-outline mb-4">
+							<label for="password" class="form-label fw-bold">Password</label>
+							<input type="password" id="password" @bind-value="user.Password" placeholder="***********" class="form-control" />
+						</div>
+
+						<!-- Submit button -->
+						<button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">
+							Sign up
+						</button>
+					</EditForm>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div>
-		<label>Password</label>
-		<input type="password" @bind-value="user.Password" placeholder="Enter your password here" />
-	</div>
-	<div>
-	<p>Haven't signed up yet?
-	<NavLink href="/">
-		<span>Sign up</span>
-	</NavLink>
-	</p>
-	</div>
-	<div>
-		<button type="submit">Sign In</button>
-	</div>
-</EditForm>
+</section>
+
 
 @code{
 	private UserModel user = new UserModel();

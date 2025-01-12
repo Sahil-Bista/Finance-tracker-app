@@ -6,92 +6,99 @@
 @inject dbDebtService debtdb
 @inject TransactionService TransactionService
 
-<div>
-    <h1>Transactions</h1>
-    <h2>Balance : @TransactionService.Balance</h2>
-    <button @onclick="()=>SortByDate()">Sort by date</button>
 
-    <SearchBar OnSearch="UpdateFilteredTransactions"></SearchBar>
+<div class="container mt-4 p-4 border rounded shadow-sm bg-light">
+    <h1 class="mb-3">Cash Outflows</h1>
+    <div class="d-flex flex-wrap align-items-center">
+        <p class="mb-0 me-4">Outflow Sum: @OutflowAmount</p>
+        <p class="mb-0 me-4">Highest Cash Outflow: @highestOutFlow</p>
+        <p class="mb-0">Lowest Cash Outflow: @lowestOutFlow</p>
+    </div>
     <br />
-    <form @onsubmit="SearchByDateRange">
-         <div>
-             <input type="date" id="startDate" placeholder="Enter the start date" @bind-value="startDate"/>
-         </div>
-         <div>
-             <input type="date" id="endDate" placeholder="Enter the end date" @bind-value="endDate" />
-         </div>
-    </form>
-   
-
-    <div>
-        <h1>Total transactions: @filteredTransactions.Count</h1>
-        <ul>
-            @foreach (var transaction in filteredTransactions)
-            {
-                <li>
-                    @transaction.TransactionName
-                    @transaction.TransactionAmount
-                    @transaction.TransactionTime
-                    @transaction.TransactionType
-                    <button @onclick="() => HandleDelete(transaction.TransactionId)"> Delete</button>
-                </li>
-            }
-        </ul>
+    <div class="d-flex flex-wrap align-items-center">
+        <button class="btn btn-primary me-3" @onclick="RedirectToAddTransaction">
+            Add Cash Outflow
+        </button>
+        <button class="btn btn-primary">
+            View full history
+        </button>
     </div>
-</div>
-<hr />
-<div>
-
-    <h1>Cash Outflows</h1>
-    <p>Outflowsum: @OutflowAmount</p>
-    <div>
-        <h1>Total Cash Outflows: @cashOutflows.Count</h1>
-        <ul>
-            @foreach (var transaction in cashOutflows)
+    <br />
+    <h3>5 latest cash Outflows</h3>
+    <br>
+    
+    <table class="table">
+        <thead class="thead-dark ">
+            <tr>
+                <th scope="col">TransactionName</th>
+                <th scope="col">TransactionAmount</th>
+                <th scope="col">TransactionTime</th>
+                <th scope="col">TransactionType</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var transaction in cashOutflows.Take(5))
             {
-                <li>
-                    @transaction.TransactionName
-                    @transaction.TransactionAmount
-                    <button @onclick="() => HandleDelete(transaction.TransactionId)"> Delete</button>
-                </li>
+                <tr>
+                    <td>@transaction.TransactionName</td>
+                    <td>@transaction.TransactionAmount</td>
+                    <td>@transaction.TransactionTime</td>
+                    <td>@transaction.TransactionType</td>
+                    <td>
+                        <button @onclick="() => HandleDelete(transaction.TransactionId)">Delete</button>
+                    </td>
+                </tr>
             }
-        </ul>
-    </div>
-
+        </tbody>
+    </table>
 </div>
-<hr />
-<div>
 
-    <h1>Cash Inflows</h1>
-    <p>Inflow sum : @InflowAmount</p>
-    <div>
-        <h1>Total Cash Inflows : @cashInflows.Count</h1>
-        <ul>
-            @foreach (var transaction in cashInflows)
+<div class="container mt-4 p-4 border rounded shadow-sm bg-light">
+    <h1 class="mb-3">Cash Outflows</h1>
+    <div class="d-flex flex-wrap align-items-center">
+        <p class="mb-0 me-4">Inflow Sum: @InflowAmount</p>
+        <p class="mb-0 me-4">Highest Cash Inflow: @highestInFlow</p>
+        <p class="mb-0">Lowest Cash Inflow: @lowestInFlow</p>
+    </div>
+    <br />
+    <div class="d-flex flex-wrap align-items-center">
+        <button class="btn btn-primary me-3" @onclick="RedirectToAddTransaction">
+            Add Cash Inflow 
+        </button>
+        <button class="btn btn-primary">
+            View full history
+        </button>
+    </div>
+    <br />
+    <h3>5 latest cash inflows</h3>
+    <br />
+    <table class="table">
+        <thead class="thead-dark ">
+            <tr>
+                <th scope="col">TransactionName</th>
+                <th scope="col">TransactionAmount</th>
+                <th scope="col">TransactionTime</th>
+                <th scope="col">TransactionType</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var transaction in cashInflows.Take(5))
             {
-                <li>
-                    @transaction.TransactionName
-                    @transaction.TransactionAmount
-                    <button @onclick="() => HandleDelete(transaction.TransactionId)"> Delete</button>
-                </li>
+                <tr>
+                    <td>@transaction.TransactionName</td>
+                    <td>@transaction.TransactionAmount</td>
+                    <td>@transaction.TransactionTime</td>
+                    <td>@transaction.TransactionType</td>
+                    <td>
+                        <button @onclick="() => HandleDelete(transaction.TransactionId)">Delete</button>
+                    </td>
+                </tr>
             }
-        </ul>
-    </div>
-
+        </tbody>
+    </table>
 </div>
-
-<div>
-    <button @onclick="RedirectToAddTransaction">
-        Add Transaction
-    </button>
-</div>
-
-<div>
-    <button @onclick="RedirectToAddDebt">
-        Add Debt
-    </button>
-</div>
-
 
 @code {
     private List<TransactionModel> transactions = new List<TransactionModel>();
@@ -104,6 +111,11 @@
     private Double debt;
     private DateTime startDate;
     private DateTime endDate;
+    private Double highestOutFlow;
+    private Double lowestOutFlow;
+    private Double highestInFlow;
+    private Double lowestInFlow;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -111,8 +123,12 @@
         filteredTransactions = transactions.ToList();
         cashOutflows = transactions.Where(t => t.TransactionType == "Debit").OrderByDescending(t => t.TransactionTime).ToList();
         OutflowAmount = cashOutflows.Sum(t => t.TransactionAmount);
+        highestOutFlow = cashOutflows.Max(t => t.TransactionAmount);
+        lowestOutFlow = cashOutflows.Min(t => t.TransactionAmount);
         cashInflows = transactions.Where(t => t.TransactionType == "Credit").OrderByDescending(t => t.TransactionTime).ToList();
         InflowAmount = cashInflows.Sum(t => t.TransactionAmount);
+        highestInFlow = cashInflows.Max(t => t.TransactionAmount);
+        lowestInFlow = cashInflows.Min(t => t.TransactionAmount);
         Balance = InflowAmount - OutflowAmount;
         TransactionService.Balance = Balance;
         debt = TransactionService.Debt;
@@ -156,35 +172,26 @@
 
     private void  UpdateFilteredTransactions(string searchTerm)
     {
-        if (string.IsNullOrEmpty(searchTerm))
+        filteredTransactions = transactions.ToList();
+
+        if (!string.IsNullOrEmpty(searchTerm))
         {
-            filteredTransactions = transactions.ToList();
-        }
-        else
-        {
-            filteredTransactions = transactions
-            .Where(t => t.TransactionName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) || 
-            t.TransactionType.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-            t.TransactionCustomTags !=null && t.TransactionCustomTags.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
-            .ToList();
+            filteredTransactions = filteredTransactions
+                .Where(t => t.TransactionName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            t.TransactionType.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            (t.TransactionCustomTags != null && t.TransactionCustomTags.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
+                .ToList();
         }
 
-        if (startDate != default(DateTime) && endDate != default(DateTime)) 
-        {
-            filteredTransactions = filteredTransactions.Where(t => t.TransactionTime >= startDate && t.TransactionTime <= endDate).ToList();
-        }
-
-        StateHasChanged();
-
-
-    }
-
-    private async Task SearchByDateRange()
-    {
         if (startDate != default(DateTime) && endDate != default(DateTime))
         {
-            filteredTransactions = transactions.Where(t => t.TransactionTime >= startDate && t.TransactionTime <= endDate).ToList();
+            filteredTransactions = filteredTransactions
+                .Where(t => t.TransactionTime >= startDate && t.TransactionTime <= endDate)
+                .ToList();
         }
+
         StateHasChanged();
+
+
     }
 }

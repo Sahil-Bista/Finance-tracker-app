@@ -5,42 +5,50 @@
 @inject TransactionService TransactionService;
 @inject IJSRuntime JS;
 
-<div>
-
-    <h1>Debts</h1>
-    <p>Total Debt : @TotalDebt</p>
-    <p>Total Balance With Debt : @TotalBalanceWithDebt</p>
-    <p>Remaining debt : @TotalUnpaidDebts</p>
-    <p>Cleared Debt : @PaidDebts</p>
-    <p></p>
-    <div>
-        <ul>
+<div class="container mt-4 p-4 border rounded shadow-sm bg-light">
+    <h1 class="mb-3">Cash Outflows</h1>
+    <div class="d-flex flex-wrap align-items-center">
+        <p class="mb-0 me-4">Total Debt : @TotalDebt</p>
+        <p class="mb-0 me-4">Total Balance With Debt : @TotalBalanceWithDebt</p>
+        <p class="mb-0">Remaining debt : @TotalUnpaidDebts</p>
+        <p class=Cleared Debt : @PaidDebts</p>
+    </div>
+    <br />
+    <div class="d-flex flex-wrap align-items-center">
+        <button class="btn btn-primary me-3" @onclick="RedirectToAddDebt">
+            Add Debt
+        </button>
+    </div>
+    <br />
+    <h3> Debts</h3>
+    <br>
+    <table class="table">
+        <thead class="thead-dark ">
+            <tr>
+                <th scope="col">Debt Source</th>
+                <th scope="col">Debt Amount</th>
+                <th scope="col">Due Date</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
             @foreach (var debt in debts)
             {
-                <li style="@(debt.IsCleared==false ? "background-color: goldenrod;" : "")">
-                    @debt.DebtSource
-                    @debt.DebtAmount
-                    @debt.IsCleared
-                    @if(@debt.IsCleared == false){
-                    <button type="submit" @onclick="() => HandleDelete(debt.DebtId)"> Clear Debt </button>
-                    }
-                </li>
+                <tr style="@((debt.IsCleared) ? "background-color: #d4edda;" : "")">
+                    <td>@debt.DebtSource</td>
+                    <td>@debt.DebtAmount</td>
+                    <td>@debt.DueDate</td>
+                    
+                    @if (@debt.IsCleared == false)
+                        {
+                            <td>
+                                <button type="submit" @onclick="() => HandleDelete(debt.DebtId)"> Clear Debt </button>
+                            </td>
+                        }
+                </tr>
             }
-        </ul>
-    </div>
-
-</div>
-
-<div>
-    <button @onclick="RedirectToAddTransaction">
-        Add Transaction
-    </button>
-</div>
-
-<div>
-    <button @onclick="RedirectToAddDebt">
-        Add Debt
-    </button>
+        </tbody>
+    </table>
 </div>
 
 

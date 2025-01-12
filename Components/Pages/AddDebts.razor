@@ -3,52 +3,59 @@
 @using Corsework.Model
 @inject NavigationManager Navigation
 @using System.ComponentModel.DataAnnotations
+@using Corsework.Components.Layout
 @inject IJSRuntime JS
 @inject TransactionService TransactionService
+@layout CustomLayout;
 
-<h3>Add Debts</h3>
 
-<EditForm Model="@debt" OnSubmit="HandleSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
 
-    <div class="col-auto w-75">
-        <div>
-            <label for="debtSource">Debt Source</label>
-            <InputText id="debtSource" @bind-Value="debt.DebtSource" placeholder="Add debt source here" />
+<div class="container mt-4 p-4 border rounded shadow-sm bg-light">
+    <h3 class="mb-4 text-center">Add Debt</h3>
+
+    <EditForm Model="@debt" OnSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="row">
+            <!-- Transaction Name -->
+            <div class="col-md-6 mb-3">
+                <label for="debtSource">Debt Source</label>
+                <InputText id="debtSource" @bind-Value="debt.DebtSource" placeholder="Add debt source here" />
+            </div>
+
+            <!-- Transaction Amount -->
+            <div class="col-md-6 mb-3">
+                <label for="debtAmount">Debt Amount</label>
+                <InputNumber id="debtAmount" @bind-Value="debt.DebtAmount" placeholder="Add debt amount here" />
+            </div>
         </div>
 
-        <div>
-            <label for="debtAmount">Debt Amount</label>
-            <InputNumber id="debtAmount" @bind-Value="debt.DebtAmount" placeholder="Add debt amount here" />
+        <div class="row">
+            <!-- Transaction Type -->
+            <div class="col-md-6 mb-3">
+                <label for="dueDate">Due Date</label>
+                <InputDate id="dueDate" @bind-Value="debt.DueDate" class="form-control w-100" />
+            </div>
+            <!-- Transaction Source -->
         </div>
 
-        <div>
-            <label for="dueDate">Due Date</label>
-            <InputDate id="dueDate" @bind-Value="debt.DueDate" class="form-control w-100" />
+        <!-- Submit Button -->
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary mb-3 w-100">Add Debt</button>
         </div>
+    </EditForm>
 
-        <div>
-            <label for="isCleared">Is Cleared?</label>
-            <InputCheckbox id="isCleared" @bind-Value="debt.IsCleared" />
-        </div>
-
-        <div>
-            <label for="clearedDate">Cleared Date</label>
-            <InputDate id="clearedDate" @bind-Value="debt.ClearedDate" class="form-control w-100" />
-        </div>
+    <!-- Navigation Link -->
+    <div class="mt-4 text-center">
+        <p>
+            Want to view debts?
+            <NavLink class="text-primary text-decoration-underline" href="/debts">
+                <span>View Debts</span>
+            </NavLink>
+        </p>
     </div>
-
-    <div class="col-auto w-25">
-        <button type="submit" class="btn btn-primary mb-3 w-100">Add Debt</button>
-    </div>
-
-    <div>
-        <NavLink href="/debts">
-            <span>View Debts</span>
-        </NavLink>
-    </div>
-</EditForm>
+</div>
 
 @code {
     private DebtModel debt = new DebtModel();

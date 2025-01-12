@@ -1,6 +1,7 @@
 ﻿using Corsework.Services;
 using Microsoft.Extensions.Logging;
-using Microsoft.JSInterop;
+using MudBlazor.Services;
+
 
 namespace Corsework
 {
@@ -21,10 +22,13 @@ namespace Corsework
             builder.Services.AddSingleton<dbDebtService>();
             builder.Services.AddSingleton<TransactionService>();
             builder.Services.AddMauiBlazorWebView();
+            builder.Services.AddMudServices();
 
-           
+
+
+
 #if DEBUG
-			builder.Services.AddBlazorWebViewDeveloperTools();
+            builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();
 
 #endif

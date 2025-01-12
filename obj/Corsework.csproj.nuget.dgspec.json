@@ -67,6 +67,10 @@
               "target": "Package",
               "version": "[8.0.82, )"
             },
+            "MudBlazor": {
+              "target": "Package",
+              "version": "[7.15.0, )"
+            },
             "SQLitePCLRaw.bundle_green": {
               "target": "Package",
               "version": "[2.1.10, )"

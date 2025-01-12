@@ -1,50 +1,113 @@
-@page "/"
+﻿@page "/"
 @using Corsework.Services
 @using Corsework.Model
+@using Corsework.Components.Layout
 @using System.ComponentModel.DataAnnotations
 @inject NavigationManager Navigation
 @inject IJSRuntime JS
+@layout CustomLayout
 
-<h3>Sign Up</h3>
+@if(userCount>0){
+<section class="text-center" >
+        <!-- Background image -->
+        <div class="p-5 bg-image" style="
+        background-image: url('https://mdbootstrap.com/img/new/textures/full/171.jpg');
+         height: 300px;
+        background-size: cover;
+        background-position: center;
+            "></div>
+        <!-- Background image -->
 
-<EditForm Model="@user" OnSubmit="HandleSubmit">
-    <DataAnnotationsValidator />
-    <div>
-        <label>Email</label>
-        <input type="email" @bind-value="user.UserEmail" placeholder="Enter your Email here" />
-    </div>
-    <div>
-        <label>UserName</label>
-        <input type="text" @bind-value="user.UserName" placeholder="Enter your username here" />
-    </div>
-    <div>
-        <label>Password</label>
-        <input type="password" @bind-value="user.Password" placeholder="Enter your password here" />
-    </div>
-    <div>
-        <label>Currency Type</label>
-        <select id="transactionType" @bind="user.CurrencyType">
-            <option value="$USD">US Dollar</option>
-            <option value="NPR">Nepali Rupees</option>
-            <option value="INR">Indian Rupee</option>
-        </select>
-    </div>
-    <div>
-        <p>
-            Already Signed up?
-            <NavLink href="/login">
-                <span>Login</span>
-            </NavLink>
-        </p>
-    </div>
-    <div>
-        <button type="submit">Sign Up</button>
-    </div>
-</EditForm>
+        <div class="card mx-4 mx-md-5 shadow-5-strong bg-body-tertiary" style="
+        margin-top: -120px;
+        backdrop-filter: blur(30px);
+            ">
+            <div class="card-body py-5 px-md-5">
+
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-8">
+                        <h2 class="fw-bold mb-5">Sign up now</h2>
+                        <EditForm Model="@user" OnSubmit="HandleSubmit">
+                            <DataAnnotationsValidator />
+                            <!-- 2 column grid layout with text inputs for the first and last names -->
+                        <div data-mdb-input-init class="form-outline mb-4">
+                            <input type="text" id="username" @bind-value="user.UserName" placeholder="Username" class="form-control" />
+                        </div>
+
+                            <!-- Email input -->
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <input type="email" id="email" @bind-value="user.UserEmail" placeholder="Email" class="form-control" />
+                            </div>
+
+                            <!-- Password input -->
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <input type="password" id="password" @bind-value="user.Password" placeholder="password"  class="form-control" />
+                            </div>
+
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <select id="currency" @bind="user.CurrencyType">
+                                    <option value="$USD">US Dollar</option>
+                                    <option value="NPR">Nepali Rupees</option>
+                                    <option value="INR">Indian Rupee</option>
+                                </select>
+                            </div>
+                            <!-- Checkbox -->
+                            
+
+                            <!-- Submit button -->
+                            <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">
+                                Sign up
+                            </button>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Section: Design Block -->
+}
+else
+{
+    <section class="text-center">
+        <!-- Background image with overlay -->
+        <div class="p-5 bg-image position-relative" style="
+        background-image: url('https://mdbootstrap.com/img/new/textures/full/171.jpg');
+        height: 350px;
+        background-size: cover;
+        background-position: center;">
+            <!-- Optional overlay -->
+            <div class="mask" style="background-color: rgba(0, 0, 0, 0.5); height: 100%;"></div>
+            <div class="text-center text-white position-absolute top-50 start-50 translate-middle">
+                <h1 class="display-4 fw-bold">Welcome to the Finance Tracker App</h1>
+                <p class="lead">Your gateway to managing transactions effortlessly.</p>
+            </div>
+        </div>
+
+        <!-- Content section -->
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                    <h2 class="fw-bold">Get Started</h2>
+                    <p class="mb-4">Access your transactions and take control of your finances today.</p>
+                    <NavLink href="/home" class="btn btn-primary btn-lg px-4">
+                        Go to Home Page
+                    </NavLink>
+                </div>
+            </div>
+        </div>
+    </section>
+
+}
 
 @code {
     private UserModel user = new UserModel();
     private dbUserService _userService = new dbUserService();
+    private int userCount = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        userCount = await _userService.GetUserCount();
+    }
 
     private async Task HandleSubmit()
     {
