@@ -10,22 +10,31 @@
 @using MudBlazor
 
 <div class="container mt-4 p-4 border rounded shadow-sm bg-light">
-    <h1 class="mb-3">@username 's Financial Summaries</h1>
+    <h1 class="mb-3">@username's Financial Summaries</h1>
+
+    <!-- First Row -->
     <div class="row text-center">
-        <div class="col-md-4">
-            <h4>Total Inflows</h4>
-            <p class="text-primary fw-bold">@currencyType @InflowAmount</p>
+        <div class="col-md-3">
+            <h4>Total Transactions</h4>
+            <p class="text-warning fw-bold">@NumberOfTransactions</p>
         </div>
-        <div class="col-md-4">
-            <h4>Total Outflows</h4>
-            <p class="text-danger fw-bold"> @currencyType @OutflowAmount</p>
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <h4>Balance</h4>
             <p class="text-success fw-bold">@currencyType @Balance</p>
         </div>
+        <div class="col-md-3">
+            <h4>Total Inflows</h4>
+            <p class="text-primary fw-bold">@currencyType @InflowAmount</p>
+        </div>
+        <div class="col-md-3">
+            <h4>Total Outflows</h4>
+            <p class="text-danger fw-bold">@currencyType @OutflowAmount</p>
+        </div>
     </div>
+
     <hr />
+
+    <!-- Second Row -->
     <div class="row text-center">
         <div class="col-md-4">
             <h4>Total Debt</h4>
@@ -37,31 +46,13 @@
         </div>
         <div class="col-md-4">
             <h4>Total Unpaid Debt</h4>
-            <p class="text-danger fw-bold"> @currencyType @TotalUnpaidDebts</p>
+            <p class="text-danger fw-bold">@currencyType @TotalUnpaidDebts</p>
         </div>
     </div>
 </div>
 
 <div class="container mt-4 p-4 border rounded shadow-sm bg-light">
-    <h1 class="mb-3">Transactions</h1>
-    <h2 class="mb-4">Balance: <span class="text-success">@currencyType @TransactionService.Balance</span></h2>
-
-    <div class="row g-2 align-items-center">
-        <div class="col-auto">
-            <input type="date" id="startDate" class="form-control" placeholder="Start Date" @bind="startDate" />
-        </div>
-
-        <div class="col-auto">
-            <input type="date" id="endDate" class="form-control" placeholder="End Date" @bind="endDate" />
-        </div>
-
-        <div class="col-auto">
-            <SearchBar OnSearch="UpdateFilteredTransactions"></SearchBar>
-        </div>
-    </div>
-</div>
-
-<div class="container mt-4 p-4 border rounded shadow-sm bg-light">
+    <h1>Top 5 highest transactions</h1>
     <table class="table">
         <thead class="thead-dark">
             <tr>
@@ -132,7 +123,7 @@
 </div>
 
 <div class="container mt-4 p-4 border rounded shadow-sm bg-light">
-    <h2 class="mb-4">Filter Debts by Date Range</h2>
+    <h2 class="mb-4">Pending Debts</h2>
     <div class="row g-2 align-items-center">
         <div class="col-auto">
             <input type="date" id="debtStartDate" class="form-control" placeholder="Start Date" @bind="debtStartDate" />
@@ -183,11 +174,12 @@
     private List<DebtModel> filteredDebts = new List<DebtModel>();
     private UserModel user;
     private double OutflowAmount;
-    private Double InflowAmount;
-    private Double Balance;
-    private Double TotalDebt;
-    private Double TotalUnpaidDebts;
-    private Double TotalPaidDebts;
+    private double NumberOfTransactions;
+    private double InflowAmount;
+    private double Balance;
+    private double TotalDebt;
+    private double TotalUnpaidDebts;
+    private double TotalPaidDebts;
     private DateTime startDate;
     private DateTime endDate;
     private DateTime debtStartDate;
@@ -231,9 +223,10 @@
 
             TotalDebt = TotalPaidDebts + TotalUnpaidDebts; // Calculate total debt
 
-
             transactions = await DbService.GetTransactions();
             filteredTransactions = transactions.ToList().OrderByDescending(t => t.TransactionAmount).ToList();
+            NumberOfTransactions = filteredTransactions.Count();
+
             cashOutflows = transactions.Where(t => t.TransactionType == "Debit").OrderByDescending(t => t.TransactionTime).ToList();
             OutflowAmount = cashOutflows.Sum(t => t.TransactionAmount);
 

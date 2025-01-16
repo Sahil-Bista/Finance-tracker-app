@@ -4,13 +4,14 @@
 @inject NavigationManager Navigation
 @inject dbService DbService
 @inject dbDebtService debtdb
+@inject dbUserService userDb
 @inject TransactionService TransactionService
 @inject IJSRuntime JS
 
 
 <div class="container mt-4 p-4 border rounded shadow-sm bg-light">
     <h1 class="mb-3">Transactions</h1>
-    <h2 class="mb-4">Balance: <span class="text-success">@TransactionService.Balance</span></h2>
+    <h2 class="mb-4">Balance: <span class="text-success">@currencyType @TransactionService.Balance</span></h2>
 
     <div class="row g-2 align-items-center">
 
@@ -78,16 +79,23 @@
     private List<TransactionModel> cashInflows = new List<TransactionModel>();
     private List<DebtModel> debts = new List<DebtModel>();
     private List<DebtModel> unpaidDebts = new List<DebtModel>();
+    private UserModel user;
     private double OutflowAmount;
     private Double InflowAmount;
     private Double Balance;
     private Double TotalUnpaidDebts;
     private DateTime startDate;
     private DateTime endDate;
+    private string currencyType;
     private bool isAscending = true;
 
     protected override async Task OnInitializedAsync()
     {
+        user = await userDb.GetUser();
+        if (user != null)
+        {
+            currencyType = user.CurrencyType;
+        }
         debts = await debtdb.GetDebts();
         unpaidDebts = debts.Where(d => d.IsCleared == false).ToList();
         TotalUnpaidDebts = unpaidDebts.Sum(d => d.DebtAmount);

@@ -30,7 +30,7 @@
     <AppXManifest Include="C:\Users\bista\source\repos\Corsework\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2025-01-16T10:00:45.766</Modified>
+      <Modified>2025-01-16T14:12:35.761</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -44,11 +44,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Corsework.dll">
       <PackagePath>Corsework.dll</PackagePath>
-      <Modified>2025-01-16T10:00:45.113</Modified>
+      <Modified>2025-01-16T14:12:33.621</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>Corsework.exe</PackagePath>
-      <Modified>2025-01-16T10:00:45.126</Modified>
+      <Modified>2025-01-16T14:12:33.858</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\Resources\Raw\AboutAssets.txt">
       <PackagePath>AboutAssets.txt</PackagePath>

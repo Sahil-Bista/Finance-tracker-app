@@ -4,6 +4,7 @@
 @inject NavigationManager Navigation
 @inject dbService DbService
 @inject dbDebtService debtdb
+@inject dbUserService userDb
 @inject TransactionService TransactionService
 @inject IJSRuntime JS
 
@@ -11,9 +12,9 @@
 <div class="container mt-4 p-4 border rounded shadow-sm bg-light">
     <h1 class="mb-3">Cash Outflows</h1>
     <div class="d-flex flex-wrap align-items-center">
-        <p class="mb-0 me-4">Outflow Sum: @OutflowAmount</p>
-        <p class="mb-0 me-4">Highest Cash Outflow: @highestOutFlow</p>
-        <p class="mb-0">Lowest Cash Outflow: @lowestOutFlow</p>
+        <p class="mb-0 me-4">Outflow Sum: @currencyType @OutflowAmount</p>
+        <p class="mb-0 me-4">Highest Cash Outflow: @currencyType @highestOutFlow</p>
+        <p class="mb-0">Lowest Cash Outflow: @currencyType @lowestOutFlow</p>
     </div>
     <br />
     <div class="d-flex flex-wrap align-items-center">
@@ -32,7 +33,7 @@
         <thead class="thead-dark ">
             <tr>
                 <th scope="col">TransactionName</th>
-                <th scope="col">TransactionAmount</th>
+                <th scope="col">TransactionAmount (in @currencyType)</th>
                 <th scope="col">TransactionTime</th>
                 <th scope="col">TransactionType</th>
                
@@ -55,9 +56,9 @@
 <div class="container mt-4 p-4 border rounded shadow-sm bg-light">
     <h1 class="mb-3">Cash Inflows</h1>
     <div class="d-flex flex-wrap align-items-center">
-        <p class="mb-0 me-4">Inflow Sum: @InflowAmount</p>
-        <p class="mb-0 me-4">Highest Cash Inflow: @highestInFlow</p>
-        <p class="mb-0">Lowest Cash Inflow: @lowestInFlow</p>
+        <p class="mb-0 me-4">Inflow Sum: @currencyType @InflowAmount</p>
+        <p class="mb-0 me-4">Highest Cash Inflow: @currencyType @highestInFlow</p>
+        <p class="mb-0">Lowest Cash Inflow: @currencyType @lowestInFlow</p>
     </div>
     <br />
     <div class="d-flex flex-wrap align-items-center">
@@ -86,7 +87,7 @@
             {
                 <tr>
                     <td>@transaction.TransactionName</td>
-                    <td>@transaction.TransactionAmount</td>
+                    <td>@transaction.TransactionAmount (in @currencyType)</td>
                     <td>@transaction.TransactionTime</td>
                     <td>@transaction.TransactionType</td>
                   
@@ -101,20 +102,33 @@
     private List<TransactionModel> filteredTransactions = new List<TransactionModel>();
     private List<TransactionModel> cashOutflows = new List<TransactionModel>();
     private List<TransactionModel> cashInflows = new List<TransactionModel>();
+    private List<DebtModel> debts = new List<DebtModel>();
+    private List<DebtModel> unpaidDebts = new List<DebtModel>();
+    private UserModel user;
     private double OutflowAmount;
-    private Double InflowAmount;
-    private Double Balance;
-    private Double debt;
+    private double InflowAmount;
+    private double Balance;
+    private double debt;
     private DateTime startDate;
     private DateTime endDate;
-    private Double highestOutFlow;
-    private Double lowestOutFlow;
-    private Double highestInFlow;
-    private Double lowestInFlow;
+    private double highestOutFlow;
+    private double lowestOutFlow;
+    private double highestInFlow;
+    private double lowestInFlow;
+    private double TotalUnpaidDebts;
+    private string currencyType;
 
 
     protected override async Task OnInitializedAsync()
     {
+        user = await userDb.GetUser();
+        if (user != null)
+        {
+            currencyType = user.CurrencyType;
+        }
+        debts = await debtdb.GetDebts();
+        unpaidDebts = debts.Where(d => d.IsCleared == false).ToList();
+        TotalUnpaidDebts = unpaidDebts.Sum(d => d.DebtAmount);
         transactions = await DbService.GetTransactions();
         filteredTransactions = transactions.OrderByDescending(t => t.TransactionTime).ToList();
         cashOutflows = transactions.Where(t => t.TransactionType == "Debit").OrderByDescending(t => t.TransactionTime).ToList();
@@ -127,7 +141,7 @@
         lowestInFlow = cashInflows.Any() ? cashInflows.Min(t => t.TransactionAmount) : 0;
 
         // Calculate balance
-        debt = TransactionService.Debt;
+        debt = TotalUnpaidDebts;
         Balance = InflowAmount - OutflowAmount + debt;
         TransactionService.Balance = Balance;
     }
