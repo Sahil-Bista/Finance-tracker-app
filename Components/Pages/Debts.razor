@@ -8,7 +8,6 @@
 <div class="container mt-4 p-4 border rounded shadow-sm bg-light">
     <h1 class="mb-3">Cash Outflows</h1>
     <div class="d-flex flex-wrap align-items-center">
-        <p class="mb-0 me-4">Total Debt : @TotalDebt</p>
         <p class="mb-0 me-4">Total Balance With Debt : @TotalBalanceWithDebt</p>
         <p class="mb-0">Remaining debt : @TotalUnpaidDebts</p>
         <p class=Cleared Debt : @PaidDebts</p>
@@ -66,13 +65,11 @@
     {
         debts = await _dbService.GetDebts();
         debts = debts.OrderByDescending(d => d.DueDate).ToList();
-        TotalDebt = debts.Sum(d => d.DebtAmount);
         unpaidDebts = debts.Where(d => d.IsCleared == false).ToList();
         TotalUnpaidDebts = unpaidDebts.Sum(d => d.DebtAmount);
         paidDebts = debts.Where(d => d.IsCleared == true).ToList();
         PaidDebts = paidDebts.Sum(d => d.DebtAmount);
-        TransactionService.Debt = TotalDebt;
-        TotalBalanceWithDebt = TransactionService.Balance + TransactionService.Debt;
+        TotalBalanceWithDebt = TransactionService.Balance;
     }
 
     private async Task HandleDelete(Guid debt)

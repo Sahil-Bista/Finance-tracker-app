@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Corsework.Components.Pages;
+using System.Transactions;
 
 namespace Corsework.Services
 {
-    internal class TransactionService
+    public class TransactionService
     {
         public double Balance { get; set; }
         public double Debt { get; set; }

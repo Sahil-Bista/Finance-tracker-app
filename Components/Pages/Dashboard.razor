@@ -1,0 +1,334 @@
+﻿@page "/dashboard"
+@using Corsework.Services
+@using Corsework.Model
+@inject NavigationManager Navigation
+@inject dbUserService userDb
+@inject dbService DbService
+@inject dbDebtService debtdb
+@inject TransactionService TransactionService
+@inject IJSRuntime JS
+@using MudBlazor
+
+<div class="container mt-4 p-4 border rounded shadow-sm bg-light">
+    <h1 class="mb-3">@username 's Financial Summaries</h1>
+    <div class="row text-center">
+        <div class="col-md-4">
+            <h4>Total Inflows</h4>
+            <p class="text-primary fw-bold">@currencyType @InflowAmount</p>
+        </div>
+        <div class="col-md-4">
+            <h4>Total Outflows</h4>
+            <p class="text-danger fw-bold"> @currencyType @OutflowAmount</p>
+        </div>
+        <div class="col-md-4">
+            <h4>Balance</h4>
+            <p class="text-success fw-bold">@currencyType @Balance</p>
+        </div>
+    </div>
+    <hr />
+    <div class="row text-center">
+        <div class="col-md-4">
+            <h4>Total Debt</h4>
+            <p class="text-warning fw-bold">@currencyType @TotalDebt</p>
+        </div>
+        <div class="col-md-4">
+            <h4>Total Paid Debt</h4>
+            <p class="text-secondary fw-bold">@currencyType @TotalPaidDebts</p>
+        </div>
+        <div class="col-md-4">
+            <h4>Total Unpaid Debt</h4>
+            <p class="text-danger fw-bold"> @currencyType @TotalUnpaidDebts</p>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4 p-4 border rounded shadow-sm bg-light">
+    <h1 class="mb-3">Transactions</h1>
+    <h2 class="mb-4">Balance: <span class="text-success">@currencyType @TransactionService.Balance</span></h2>
+
+    <div class="row g-2 align-items-center">
+        <div class="col-auto">
+            <input type="date" id="startDate" class="form-control" placeholder="Start Date" @bind="startDate" />
+        </div>
+
+        <div class="col-auto">
+            <input type="date" id="endDate" class="form-control" placeholder="End Date" @bind="endDate" />
+        </div>
+
+        <div class="col-auto">
+            <SearchBar OnSearch="UpdateFilteredTransactions"></SearchBar>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4 p-4 border rounded shadow-sm bg-light">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">TransactionName</th>
+                <th scope="col">TransactionAmount (in @currencyType)</th>
+                <th scope="col">TransactionTime</th>
+                <th scope="col">TransactionType</th>
+              
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var transaction in filteredTransactions.Take(5))
+            {
+                <tr>
+                    <td>@transaction.TransactionName</td>
+                    <td>@transaction.TransactionAmount</td>
+                    <td>@transaction.TransactionTime</td>
+                    <td>@transaction.TransactionType</td>
+                  
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-between">
+    <div class="container mt-4 p-4 border rounded shadow-sm bg-light flex-fill me-3">
+        <MudText Typo="Typo.h4" Class="text-center">Top 5 Cash Outflows</MudText>
+        @if (Outflows != null && Outflows.Any() && OutflowLabels != null && OutflowLabels.Any())
+        {
+            <div class="chart-container">
+                <MudChart ChartType="ChartType.Bar"
+                          ChartSeries="@Outflows"
+                          @bind-SelectedIndex="OutflowIndex"
+                          XAxisLabels="@OutflowLabels"
+                          Width="100%"
+                          Height="250px">
+                    <MudChartOptions YAxisTicks="5" BarSpacing="20" />
+                </MudChart>
+            </div>
+        }
+        else
+        {
+            <MudText Typo="Typo.h6" Class="text-center mt-4">No cash outflows data available.</MudText>
+        }
+    </div>
+
+    <div class="container mt-4 p-4 border rounded shadow-sm bg-light flex-fill">
+        <MudText Typo="Typo.h4" Class="text-center">Top 5 Cash Inflows</MudText>
+        @if (Inflows != null && Inflows.Any() && InflowLabels != null && InflowLabels.Any())
+        {
+            <div class="chart-container">
+                <MudChart ChartType="ChartType.Bar"
+                          ChartSeries="@Inflows"
+                          @bind-SelectedIndex="InflowIndex"
+                          XAxisLabels="@InflowLabels"
+                          Width="100%"
+                          Height="250px">
+                    <MudChartOptions YAxisTicks="5" BarSpacing="20" />
+                </MudChart>
+            </div>
+        }
+        else
+        {
+            <MudText Typo="Typo.h6" Class="text-center mt-4">No cash inflows data available.</MudText>
+        }
+    </div>
+</div>
+
+<div class="container mt-4 p-4 border rounded shadow-sm bg-light">
+    <h2 class="mb-4">Filter Debts by Date Range</h2>
+    <div class="row g-2 align-items-center">
+        <div class="col-auto">
+            <input type="date" id="debtStartDate" class="form-control" placeholder="Start Date" @bind="debtStartDate" />
+        </div>
+        <div class="col-auto">
+            <input type="date" id="debtEndDate" class="form-control" placeholder="End Date" @bind="debtEndDate" />
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary" @onclick="FilterDebtsByDateRange">Filter Debts</button>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4 p-4 border rounded shadow-sm bg-light">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">DebtSource</th>
+                <th scope="col">DebtAmount (in @currencyType)</th>
+                <th scope="col">Due Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var debt in filteredDebts)
+            {
+                <tr>
+                    <td>@debt.DebtSource</td>
+                    <td>@debt.DebtAmount</td>
+                    <td>@debt.DueDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+@code {
+    private List<TransactionModel> transactions = new List<TransactionModel>();
+    private List<TransactionModel> filteredTransactions = new List<TransactionModel>();
+    private List<TransactionModel> cashOutflows = new List<TransactionModel>();
+    private List<TransactionModel> cashInflows = new List<TransactionModel>();
+    private List<DebtModel> debts = new List<DebtModel>();
+    private List<DebtModel> unpaidDebts = new List<DebtModel>();
+    private List<DebtModel> paidDebts = new List<DebtModel>();
+    private List<DebtModel> filteredDebts = new List<DebtModel>();
+    private UserModel user;
+    private double OutflowAmount;
+    private Double InflowAmount;
+    private Double Balance;
+    private Double TotalDebt;
+    private Double TotalUnpaidDebts;
+    private Double TotalPaidDebts;
+    private DateTime startDate;
+    private DateTime endDate;
+    private DateTime debtStartDate;
+    private DateTime debtEndDate;
+    private bool isAscending = true;
+    private string currencyType;
+    private string username;
+
+    // Cash Outflows Chart
+    private int OutflowIndex = -1;
+    private string[] OutflowLabels = Array.Empty<string>();
+    private List<ChartSeries> Outflows = new List<ChartSeries>();
+
+    // Cash Inflows Chart
+    private int InflowIndex = -1;
+    private string[] InflowLabels = Array.Empty<string>();
+    private List<ChartSeries> Inflows = new List<ChartSeries>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            user = await userDb.GetUser();
+            if (user != null)
+            {
+                currencyType = user.CurrencyType;
+                username = user.UserName;
+            }
+            debts = await debtdb.GetDebts();
+            if (debts == null)
+            {
+                debts = new List<DebtModel>(); // Initialize to an empty list if null
+            }
+
+            unpaidDebts = debts.Where(d => d.IsCleared == false).ToList();
+            TotalUnpaidDebts = unpaidDebts.Count > 0 ? unpaidDebts.Sum(d => d.DebtAmount) : 0; // Sum only if unpaidDebts has items
+            filteredDebts = unpaidDebts;
+
+            paidDebts = debts.Where(d => d.IsCleared == true).ToList();
+            TotalPaidDebts = paidDebts.Count > 0 ? paidDebts.Sum(d => d.DebtAmount) : 0; // Sum only if paidDebts has items
+
+            TotalDebt = TotalPaidDebts + TotalUnpaidDebts; // Calculate total debt
+
+
+            transactions = await DbService.GetTransactions();
+            filteredTransactions = transactions.ToList().OrderByDescending(t => t.TransactionAmount).ToList();
+            cashOutflows = transactions.Where(t => t.TransactionType == "Debit").OrderByDescending(t => t.TransactionTime).ToList();
+            OutflowAmount = cashOutflows.Sum(t => t.TransactionAmount);
+
+            cashInflows = transactions.Where(t => t.TransactionType == "Credit").OrderByDescending(t => t.TransactionTime).ToList();
+            InflowAmount = cashInflows.Sum(t => t.TransactionAmount);
+
+            Balance = InflowAmount - OutflowAmount + TotalUnpaidDebts;
+            TransactionService.Balance = Balance;
+
+            // Prepare Outflows Chart Data
+            OutflowLabels = cashOutflows.Select(t => t.TransactionName).ToArray();
+            Outflows = new List<ChartSeries>
+            {
+                new ChartSeries { Data = cashOutflows.Select(t => t.TransactionAmount).ToArray() }
+            };
+
+            // Prepare Inflows Chart Data
+            InflowLabels = cashInflows.Select(t => t.TransactionName).ToArray();
+            Inflows = new List<ChartSeries>
+            {
+                new ChartSeries { Data = cashInflows.Select(t => t.TransactionAmount).ToArray() }
+            };
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Unhandled exception: {ex.Message}");
+        }
+    }
+
+    private dbService _dbService = new dbService();
+
+
+    private void RedirectToAddTransaction()
+    {
+        Navigation.NavigateTo("/addTransactions");
+    }
+
+    private void RedirectToAddDebt()
+    {
+        Navigation.NavigateTo("/addDebts");
+    }
+
+    private async Task UpdateFilteredTransactions(string searchTerm)
+    {
+        filteredTransactions = transactions.ToList();
+
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            filteredTransactions = filteredTransactions
+                .Where(t => t.TransactionName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            t.TransactionType.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            (t.TransactionDefaultTag != null && t.TransactionDefaultTag.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))) 
+                .ToList();
+        }
+
+        if (startDate != default(DateTime) && endDate != default(DateTime))
+        {
+            if (startDate < endDate)
+            {
+                filteredTransactions = filteredTransactions
+                    .Where(t => t.TransactionTime >= startDate && t.TransactionTime <= endDate)
+                    .ToList();
+            }
+            else
+            {
+                Console.WriteLine("Invalid date range.");
+                await JS.InvokeVoidAsync("showAlert", "End date cannot be less than start date");
+            }
+        }
+        filteredTransactions = filteredTransactions.OrderByDescending(t => t.TransactionAmount).ToList();
+        StateHasChanged();
+    }
+
+    private void FilterDebtsByDateRange()
+    {
+        if (debtStartDate == default(DateTime) && debtEndDate == default(DateTime))
+        {
+            filteredDebts = unpaidDebts.ToList();
+        }
+        else if (debtStartDate != default(DateTime) && debtEndDate != default(DateTime))
+        {
+            if (debtStartDate <= debtEndDate)
+            {
+                filteredDebts = unpaidDebts
+                    .Where(d => d.DueDate >= debtStartDate && d.DueDate <= debtEndDate)
+                    .OrderBy(d => d.DueDate) 
+                    .ToList();
+            }
+            else
+            {
+                Console.WriteLine("Invalid debt date range.");
+                JS.InvokeVoidAsync("showAlert", "End date cannot be earlier than start date.");
+            }
+        }
+        StateHasChanged(); 
+    }
+}
+

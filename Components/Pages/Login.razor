@@ -5,6 +5,7 @@
 @inject NavigationManager Navigation
 @using System.ComponentModel.DataAnnotations
 @inject IJSRuntime JS
+@inject dbUserService _userService
 @layout CustomLayout
 
 <section class="text-center">
@@ -56,7 +57,6 @@
 
 @code{
 	private UserModel user = new UserModel();
-	private dbUserService _userService = new dbUserService();
 
 	private async Task HandleLogin()
 	{

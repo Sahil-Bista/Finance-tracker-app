@@ -30,7 +30,7 @@
     <AppXManifest Include="C:\Users\bista\source\repos\Corsework\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2025-01-12T07:00:14.480</Modified>
+      <Modified>2025-01-16T10:00:45.766</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -44,11 +44,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Corsework.dll">
       <PackagePath>Corsework.dll</PackagePath>
-      <Modified>2025-01-12T07:00:12.404</Modified>
+      <Modified>2025-01-16T10:00:45.113</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>Corsework.exe</PackagePath>
-      <Modified>2025-01-12T07:00:12.614</Modified>
+      <Modified>2025-01-16T10:00:45.126</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\Resources\Raw\AboutAssets.txt">
       <PackagePath>AboutAssets.txt</PackagePath>
@@ -72,7 +72,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\wwwroot\index.html">
       <PackagePath>wwwroot\index.html</PackagePath>
-      <Modified>2025-01-12T05:30:59.612</Modified>
+      <Modified>2025-01-14T09:23:49.871</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\bista\source\repos\Corsework\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-100.png">
       <PackagePath>splashSplashScreen.scale-100.png</PackagePath>

@@ -34,6 +34,10 @@ namespace Corsework.Model
 		[Column("transaction_notes")]
 		public string TransactionNotes { get; set; }
 
+        [Column("transaction_default_tag")]
+        [Required(ErrorMessage = "Transaction Default Tag must be selected")]
+        public string TransactionDefaultTag { get; set; } = "Food";
+
 		[Column("transaction_custom_tags")]
 		public string TransactionCustomTags { get; set; }
 

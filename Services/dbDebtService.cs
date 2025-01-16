@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Corsework.Services
 {
-    internal class dbDebtService
+    public class dbDebtService
     {
 
         private const string DB_NAME = "Finance_App_db.db2";

@@ -5,9 +5,10 @@
 @using System.ComponentModel.DataAnnotations
 @inject NavigationManager Navigation
 @inject IJSRuntime JS
+@inject dbUserService _userService
 @layout CustomLayout
 
-@if(userCount>0){
+@if(userCount<=0){
 <section class="text-center" >
         <!-- Background image -->
         <div class="p-5 bg-image" style="
@@ -89,7 +90,7 @@ else
                 <div class="col-md-6 text-center">
                     <h2 class="fw-bold">Get Started</h2>
                     <p class="mb-4">Access your transactions and take control of your finances today.</p>
-                    <NavLink href="/home" class="btn btn-primary btn-lg px-4">
+                    <NavLink href="/dashboard" class="btn btn-primary btn-lg px-4">
                         Go to Home Page
                     </NavLink>
                 </div>
@@ -101,7 +102,6 @@ else
 
 @code {
     private UserModel user = new UserModel();
-    private dbUserService _userService = new dbUserService();
     private int userCount = 0;
 
     protected override async Task OnInitializedAsync()

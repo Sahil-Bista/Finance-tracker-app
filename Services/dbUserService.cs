@@ -5,7 +5,7 @@ namespace Corsework.Services
 {
     public class dbUserService
     {
-        private const string DB_NAME = "Finance_app_db.db1";
+        private const string DB_NAME = "users.db";
         private readonly SQLiteAsyncConnection _connection;
 
         public dbUserService()
@@ -37,7 +37,26 @@ namespace Corsework.Services
                                          .FirstOrDefaultAsync();
         }
 
-		public async Task<int> GetUserCount()
+        public async Task<UserModel> GetUser()
+        {
+            try
+            {
+                // Retrieve the first user from the UserModel table
+                var user = await _connection.Table<UserModel>().FirstOrDefaultAsync();
+                if (user == null)
+                {
+                    Console.WriteLine("No user found in the database.");
+                }
+                return user;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving user: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<int> GetUserCount()
 		{
 			try
 			{

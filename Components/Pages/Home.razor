@@ -5,6 +5,7 @@
 @inject dbService DbService
 @inject dbDebtService debtdb
 @inject TransactionService TransactionService
+@inject IJSRuntime JS
 
 
 <div class="container mt-4 p-4 border rounded shadow-sm bg-light">
@@ -12,9 +13,6 @@
     <h2 class="mb-4">Balance: <span class="text-success">@TransactionService.Balance</span></h2>
 
     <div class="row g-2 align-items-center">
-        <div class="col-auto">
-            <button class="btn btn-primary" @onclick="()=>SortByDate()">Sort by Date</button>
-        </div>
 
         <div class="col-auto">
             <input type="date" id="startDate" class="form-control" placeholder="Start Date"
@@ -26,91 +24,99 @@
                    @bind="endDate" />
         </div>
 
-        <div class="col">
-            <SearchBar OnSearch="UpdateFilteredTransactions"></SearchBar>
+        <div class="col-auto">
+            <SearchBar OnSearch="UpdateFilteredTransactions" ></SearchBar>
         </div>
 
+        <div class="col-auto">
+            <button class="btn btn-primary" @onclick="SortTransactionOrder">Sort by Date</button>
+        </div>
+
+    </div>
+
+
+    <div class="table-responsive">
+        <table class="table table-sm table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">TransactionName</th>
+                    <th scope="col">TransactionAmount</th>
+                    <th scope="col">TransactionTime</th>
+                    <th scope="col">TransactionType</th>
+                    <th scope="col">TransactionSource</th>
+                    <th scope="col">TransactionNotes</th>
+                    <th scope="col">TransactionTags</th>
+                    <th scope="col">TransactionCustomTags</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var transaction in filteredTransactions)
+                {
+                    <tr>
+                        <td>@transaction.TransactionName</td>
+                        <td>@transaction.TransactionAmount</td>
+                        <td>@transaction.TransactionTime</td>
+                        <td>@transaction.TransactionType</td>
+                        <td>@transaction.TransactionSource</td>
+                        <td>@transaction.TransactionNotes</td>
+                        <td>@transaction.TransactionDefaultTag</td>
+                        <td>@transaction.TransactionCustomTags</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
 
 
 
-<div class="container mt-4 p-4 border rounded shadow-sm bg-light">
-    <table class="table">
-        <thead class="thead-dark ">
-            <tr>
-                <th scope="col">TransactionName</th>
-                <th scope="col">TransactionAmount</th>
-                <th scope="col">TransactionTime</th>
-                <th scope="col">TransactionType</th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var transaction in filteredTransactions.Take(5))
-            {
-                <tr>
-                    <td>@transaction.TransactionName</td>
-                    <td>@transaction.TransactionAmount</td>
-                    <td>@transaction.TransactionTime</td>
-                    <td>@transaction.TransactionType</td>
-                    <td>
-                        <button @onclick="() => HandleDelete(transaction.TransactionId)">Delete</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
 
 @code {
     private List<TransactionModel> transactions = new List<TransactionModel>();
     private List<TransactionModel> filteredTransactions = new List<TransactionModel>();
     private List<TransactionModel> cashOutflows = new List<TransactionModel>();
     private List<TransactionModel> cashInflows = new List<TransactionModel>();
+    private List<DebtModel> debts = new List<DebtModel>();
+    private List<DebtModel> unpaidDebts = new List<DebtModel>();
     private double OutflowAmount;
     private Double InflowAmount;
     private Double Balance;
-    private Double debt;
+    private Double TotalUnpaidDebts;
     private DateTime startDate;
     private DateTime endDate;
-    private Double highestOutFlow;
-    private Double lowestOutFlow;
-    private Double highestInFlow;
-    private Double lowestInFlow;
-
+    private bool isAscending = true;
 
     protected override async Task OnInitializedAsync()
     {
+        debts = await debtdb.GetDebts();
+        unpaidDebts = debts.Where(d => d.IsCleared == false).ToList();
+        TotalUnpaidDebts = unpaidDebts.Sum(d => d.DebtAmount);
         transactions = await DbService.GetTransactions();
-        filteredTransactions = transactions.ToList();
+        filteredTransactions = transactions.ToList().OrderByDescending(t => t.TransactionTime).ToList(); ;
         cashOutflows = transactions.Where(t => t.TransactionType == "Debit").OrderByDescending(t => t.TransactionTime).ToList();
         OutflowAmount = cashOutflows.Sum(t => t.TransactionAmount);
         cashInflows = transactions.Where(t => t.TransactionType == "Credit").OrderByDescending(t => t.TransactionTime).ToList();
         InflowAmount = cashInflows.Sum(t => t.TransactionAmount);
-        Balance = InflowAmount - OutflowAmount;
+        Balance = InflowAmount - OutflowAmount + TotalUnpaidDebts;
         TransactionService.Balance = Balance;
     }
 
     private dbService _dbService = new dbService();
 
-    private async Task HandleDelete(Guid transaction)
+        private void SortTransactionOrder()
     {
-        try
+        isAscending = !isAscending; // Toggle the sort order
+
+        if (isAscending)
         {
-            await _dbService.DeleteById(transaction);
-            Console.WriteLine("Transaction deleted successfully!");
-            transactions = await DbService.GetTransactions();
-            cashOutflows = transactions.Where(t => t.TransactionType == "Debit").ToList();
-            cashInflows = transactions.Where(t => t.TransactionType == "Credit").ToList();
-            Balance = InflowAmount - OutflowAmount;
-            TransactionService.Balance = Balance;
-            StateHasChanged();
+            filteredTransactions = filteredTransactions.OrderBy(t => t.TransactionTime).ToList();
         }
-        catch (Exception ex)
+        else
         {
-            Console.WriteLine($"Error: {ex.Message}");
+            filteredTransactions = filteredTransactions.OrderByDescending(t => t.TransactionTime).ToList();
         }
+
+        StateHasChanged(); // Refresh the UI
     }
 
     private void RedirectToAddTransaction()
@@ -123,12 +129,7 @@
         Navigation.NavigateTo("/addDebts");
     }
 
-    private void SortByDate()
-    {
-        transactions = filteredTransactions.OrderByDescending(t => t.TransactionTime).ToList();
-    }
-
-    private void UpdateFilteredTransactions(string searchTerm)
+    private async Task UpdateFilteredTransactions(string searchTerm)
     {
         filteredTransactions = transactions.ToList();
 
@@ -137,16 +138,26 @@
             filteredTransactions = filteredTransactions
                 .Where(t => t.TransactionName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
                             t.TransactionType.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-                            (t.TransactionCustomTags != null && t.TransactionCustomTags.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
+                            (t.TransactionDefaultTag != null && t.TransactionDefaultTag.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
                 .ToList();
         }
 
         if (startDate != default(DateTime) && endDate != default(DateTime))
         {
-            filteredTransactions = filteredTransactions
-                .Where(t => t.TransactionTime >= startDate && t.TransactionTime <= endDate)
-                .ToList();
+            if (startDate < endDate)
+            {
+                filteredTransactions = filteredTransactions
+                    .Where(t => t.TransactionTime >= startDate && t.TransactionTime <= endDate)
+                    .ToList();
+            }
+            else
+            {
+                Console.WriteLine("Invalid date range.");
+                await JS.InvokeVoidAsync("showAlert", "End date cannot be less than start date");
+            }
         }
+
+        filteredTransactions = filteredTransactions.OrderByDescending(t => t.TransactionTime).ToList();
 
         StateHasChanged();
     }

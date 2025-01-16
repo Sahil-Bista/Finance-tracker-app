@@ -1,6 +1,6 @@
 ﻿<input 
 	@bind="searchItem"
-	placeholder="Search by type, tags, name"
+	placeholder="Search..."
 	/>
 
 
@@ -10,10 +10,11 @@
 </button>
 
 
+
 @code {
 
 	[Parameter]
-	public EventCallback<string> OnSearch { get; set;}
+	public EventCallback<string> OnSearch { get; set; }
 
 	public string searchItem;
 
@@ -21,5 +22,6 @@
 	{
 		await OnSearch.InvokeAsync(searchItem);
 	}
+
 
 }

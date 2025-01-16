@@ -1,0 +1,83 @@
+﻿@page "/cashOutFlow"
+@using Corsework.Services
+@using Corsework.Model
+@using Corsework.Components.Layout
+@inject dbService DbService
+@inject NavigationManager Navigation
+@inject TransactionService TransactionService
+@inject IJSRuntime JS
+@layout CustomLayout;
+
+<div class="container mt-4 p-4 border rounded shadow-sm bg-light">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="mb-3">Cash Outflows</h1>
+        <button class="btn btn-link btn-lg text-dark" @onclick="NavigateBack">
+            <span aria-hidden="true" style="font-size: 2rem;">&times;</span>
+        </button>
+    </div>
+    <div class="d-flex flex-wrap align-items-center">
+        <p class="mb-0 me-4">Outflow Sum: @OutflowAmount</p>
+        <p class="mb-0 me-4">Highest Cash Outflow: @highestOutFlow</p>
+        <p class="mb-0">Lowest Cash Outflow: @lowestOutFlow</p>
+    </div>
+    <br />
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">TransactionName</th>
+                    <th scope="col">TransactionAmount</th>
+                    <th scope="col">TransactionTime</th>
+                    <th scope="col">TransactionType</th>
+                    <th scope="col">TransactionSource</th>
+                    <th scope="col">TransactionNotes</th>
+                    <th scope="col">TransactionTags</th>
+                    <th scope="col">TransactionCustomTags</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var transaction in cashOutflows)
+                {
+                    <tr>
+                        <td>@transaction.TransactionName</td>
+                        <td>@transaction.TransactionAmount</td>
+                        <td>@transaction.TransactionTime</td>
+                        <td>@transaction.TransactionType</td>
+                        <td>@transaction.TransactionSource</td>
+                        <td>@transaction.TransactionNotes</td>
+                        <td>@transaction.TransactionDefaultTag</td>
+                        <td>@transaction.TransactionCustomTags</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+@code {
+    private List<TransactionModel> transactions = new List<TransactionModel>();
+    private List<TransactionModel> cashOutflows = new List<TransactionModel>();
+    private double OutflowAmount;
+    private Double highestOutFlow;
+    private Double lowestOutFlow;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        transactions = await DbService.GetTransactions();
+        cashOutflows = transactions.Where(t => t.TransactionType == "Debit").OrderByDescending(t => t.TransactionTime).ToList();
+        OutflowAmount = cashOutflows.Sum(t => t.TransactionAmount);
+        highestOutFlow = cashOutflows.Any() ? cashOutflows.Max(t => t.TransactionAmount) : 0;
+        lowestOutFlow = cashOutflows.Any() ? cashOutflows.Min(t => t.TransactionAmount) : 0;
+    }
+
+
+    private void NavigateBack()
+    {
+        Navigation.NavigateTo("/transactions");
+    }
+
+}
