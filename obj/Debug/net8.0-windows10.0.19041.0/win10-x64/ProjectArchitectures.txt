@@ -1,1 +1,1 @@
-C:\Users\bista\source\repos\Corsework\Corsework.csproj;x64
+C:\Users\bista\Desktop\DotNet\Corsework\Corsework.csproj;x64

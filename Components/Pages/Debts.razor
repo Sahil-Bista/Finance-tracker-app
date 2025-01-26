@@ -24,6 +24,8 @@
     <br />
     <h3> Debts</h3>
     <br>
+    @if(debts != null && debts.Any())
+    {
     <table class="table">
         <thead class="thead-dark ">
             <tr>
@@ -50,7 +52,14 @@
                 </tr>
             }
         </tbody>
-    </table>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            No debts to display. Add new debts using the button above.
+        </div>
+    }
 </div>
 
 
@@ -76,13 +85,17 @@
             currencyType = user.CurrencyType;
         }
         debts = await _dbService.GetDebts();
+        if (debts == null)
+        {
+            debts = new List<DebtModel>(); // Initializing to an empty list if null
+        }
         debts = debts.OrderByDescending(d => d.DueDate).ToList();
-        highestDebt = debts.Max(d => d.DebtAmount);
-        lowestDebt = debts.Min(d => d.DebtAmount);
+        highestDebt = debts.Count>0 ? debts.Max(d => d.DebtAmount) : 0;
+        lowestDebt = debts.Any() ? debts.Min(d => d.DebtAmount) : 0;
         unpaidDebts = debts.Where(d => d.IsCleared == false).ToList();
-        TotalUnpaidDebts = unpaidDebts.Sum(d => d.DebtAmount);
+        TotalUnpaidDebts = unpaidDebts.Count > 0 ? unpaidDebts.Sum(d => d.DebtAmount) : 0;
         paidDebts = debts.Where(d => d.IsCleared == true).ToList();
-        PaidDebts = paidDebts.Sum(d => d.DebtAmount);
+        PaidDebts = paidDebts.Count>0 ? paidDebts.Sum(d => d.DebtAmount):0;
         TotalBalanceWithDebt = TransactionService.Balance;
     }
 
@@ -110,7 +123,7 @@
             }
             else
             {
-                await JS.InvokeVoidAsync("showAlert", "Insufficient balance");  // Show specific erro
+                await JS.InvokeVoidAsync("showAlert", "Insufficient balance");  
             }
         }
         catch (Exception ex)

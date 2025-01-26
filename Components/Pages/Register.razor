@@ -53,7 +53,6 @@
                                 </select>
                             </div>
                             <!-- Checkbox -->
-                            
 
                             <!-- Submit button -->
                             <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">
@@ -118,20 +117,20 @@ else
 
         if (!isValid)
         {
-            // Show validation errors - customized for different error types
+            // Shows validation errors - customized for different error types
             foreach (var validationResult in validationResults)
             {
                 Console.WriteLine(validationResult.ErrorMessage);
-                await JS.InvokeVoidAsync("showAlert", validationResult.ErrorMessage);  // Show specific error
+                await JS.InvokeVoidAsync("showAlert", validationResult.ErrorMessage);  
             }
-            return; // Exit method if validation fails
+            return; 
         }
 
         try
         {
             await _userService.CreateUser(user);
             Console.WriteLine("User Created successfully!");
-            user = new UserModel(); // Clear the form
+            user = new UserModel(); // Clears the form
             Navigation.NavigateTo("/login");
         }
         catch (Exception ex)

@@ -84,7 +84,7 @@
                 TransactionService.Balance += debt.DebtAmount;
                 await _dbDebtService.Create(debt);
                 Console.WriteLine("Debt added successfully!");
-                debt = new DebtModel(); // Clear the form
+                debt = new DebtModel();
                 StateHasChanged();
                 Navigation.NavigateTo("/debts");
             }

@@ -139,13 +139,13 @@
 
         if (!isValid)
         {
-            // Show validation errors - customized for different error types
+            // Shows validation errors - customized for different error types
             foreach (var validationResult in validationResults)
             {
                 Console.WriteLine(validationResult.ErrorMessage);
-                await JS.InvokeVoidAsync("showAlert", validationResult.ErrorMessage);  // Show specific error
+                await JS.InvokeVoidAsync("showAlert", validationResult.ErrorMessage); 
             }
-            return; // Exit method if validation fails
+            return; 
         }
         try
         {
@@ -159,7 +159,7 @@
             }
             await _dbService.Create(transactionModel);
             Console.WriteLine("Transaction added successfully!");
-            transactionModel = new TransactionModel(); // Clear the form
+            transactionModel = new TransactionModel(); // Clears the form
             Navigation.NavigateTo("/transactions");
         }
         catch (Exception ex)

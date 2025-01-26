@@ -65,7 +65,6 @@
 		var emailContext = new ValidationContext(user) { MemberName = "UserEmail" };
 		var passwordContext = new ValidationContext(user) { MemberName = "Password" };
 
-		// Validate specific fields
 		var isEmailValid = Validator.TryValidateProperty(user.UserEmail, emailContext, validationResults);
 		var isPasswordValid = Validator.TryValidateProperty(user.Password, passwordContext, validationResults);
 
@@ -79,16 +78,16 @@
 			foreach (var validationResult in filteredResults)
 			{
 				Console.WriteLine(validationResult.ErrorMessage);
-				await JS.InvokeVoidAsync("showAlert", validationResult.ErrorMessage);  // Show specific error
+				await JS.InvokeVoidAsync("showAlert", validationResult.ErrorMessage);  // Shows specific error
 			}
-			return; // Exit method if validation fails
+			return; 
 		}
 		var User = await _userService.GetUserByEmailAndPassword(user.UserEmail, user.Password);
 
 		if (User != null)
 		{
 			Console.WriteLine("User logged in successfully!");
-			Navigation.NavigateTo("/transactions");
+			Navigation.NavigateTo("/dashboard");
 		}
 		else
 		{

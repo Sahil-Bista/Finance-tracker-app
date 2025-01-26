@@ -189,7 +189,7 @@
     private string username;
 
     // Cash Outflows Chart
-    private int OutflowIndex = -1;
+    private int OutflowIndex = -1;//Default/no value selected
     private string[] OutflowLabels = Array.Empty<string>();
     private List<ChartSeries> Outflows = new List<ChartSeries>();
 
@@ -211,7 +211,7 @@
             debts = await debtdb.GetDebts();
             if (debts == null)
             {
-                debts = new List<DebtModel>(); // Initialize to an empty list if null
+                debts = new List<DebtModel>(); // Initializing to an empty list if null
             }
 
             unpaidDebts = debts.Where(d => d.IsCleared == false).ToList();
@@ -219,9 +219,9 @@
             filteredDebts = unpaidDebts;
 
             paidDebts = debts.Where(d => d.IsCleared == true).ToList();
-            TotalPaidDebts = paidDebts.Count > 0 ? paidDebts.Sum(d => d.DebtAmount) : 0; // Sum only if paidDebts has items
+            TotalPaidDebts = paidDebts.Count > 0 ? paidDebts.Sum(d => d.DebtAmount) : 0; 
 
-            TotalDebt = TotalPaidDebts + TotalUnpaidDebts; // Calculate total debt
+            TotalDebt = TotalPaidDebts + TotalUnpaidDebts;
 
             transactions = await DbService.GetTransactions();
             filteredTransactions = transactions.ToList().OrderByDescending(t => t.TransactionAmount).ToList();
@@ -236,14 +236,14 @@
             Balance = InflowAmount - OutflowAmount + TotalUnpaidDebts;
             TransactionService.Balance = Balance;
 
-            // Prepare Outflows Chart Data
+            //  Outflows Chart Data
             OutflowLabels = cashOutflows.Select(t => t.TransactionName).ToArray();
             Outflows = new List<ChartSeries>
             {
                 new ChartSeries { Data = cashOutflows.Select(t => t.TransactionAmount).ToArray() }
             };
 
-            // Prepare Inflows Chart Data
+            //  Inflows Chart Data
             InflowLabels = cashInflows.Select(t => t.TransactionName).ToArray();
             Inflows = new List<ChartSeries>
             {
@@ -269,36 +269,6 @@
         Navigation.NavigateTo("/addDebts");
     }
 
-    private async Task UpdateFilteredTransactions(string searchTerm)
-    {
-        filteredTransactions = transactions.ToList();
-
-        if (!string.IsNullOrEmpty(searchTerm))
-        {
-            filteredTransactions = filteredTransactions
-                .Where(t => t.TransactionName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-                            t.TransactionType.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-                            (t.TransactionDefaultTag != null && t.TransactionDefaultTag.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))) 
-                .ToList();
-        }
-
-        if (startDate != default(DateTime) && endDate != default(DateTime))
-        {
-            if (startDate < endDate)
-            {
-                filteredTransactions = filteredTransactions
-                    .Where(t => t.TransactionTime >= startDate && t.TransactionTime <= endDate)
-                    .ToList();
-            }
-            else
-            {
-                Console.WriteLine("Invalid date range.");
-                await JS.InvokeVoidAsync("showAlert", "End date cannot be less than start date");
-            }
-        }
-        filteredTransactions = filteredTransactions.OrderByDescending(t => t.TransactionAmount).ToList();
-        StateHasChanged();
-    }
 
     private void FilterDebtsByDateRange()
     {

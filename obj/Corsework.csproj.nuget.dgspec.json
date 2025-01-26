@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\bista\\source\\repos\\Corsework\\Corsework.csproj": {}
+    "C:\\Users\\bista\\Desktop\\DotNet\\Corsework\\Corsework.csproj": {}
   },
   "projects": {
-    "C:\\Users\\bista\\source\\repos\\Corsework\\Corsework.csproj": {
+    "C:\\Users\\bista\\Desktop\\DotNet\\Corsework\\Corsework.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bista\\source\\repos\\Corsework\\Corsework.csproj",
+        "projectUniqueName": "C:\\Users\\bista\\Desktop\\DotNet\\Corsework\\Corsework.csproj",
         "projectName": "Corsework",
-        "projectPath": "C:\\Users\\bista\\source\\repos\\Corsework\\Corsework.csproj",
+        "projectPath": "C:\\Users\\bista\\Desktop\\DotNet\\Corsework\\Corsework.csproj",
         "packagesPath": "C:\\Users\\bista\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bista\\source\\repos\\Corsework\\obj\\",
+        "outputPath": "C:\\Users\\bista\\Desktop\\DotNet\\Corsework\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [

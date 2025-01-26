@@ -113,7 +113,7 @@
 
         private void SortTransactionOrder()
     {
-        isAscending = !isAscending; // Toggle the sort order
+        isAscending = !isAscending; // Toggles the sort order
 
         if (isAscending)
         {
@@ -124,7 +124,7 @@
             filteredTransactions = filteredTransactions.OrderByDescending(t => t.TransactionTime).ToList();
         }
 
-        StateHasChanged(); // Refresh the UI
+        StateHasChanged(); 
     }
 
     private void RedirectToAddTransaction()
